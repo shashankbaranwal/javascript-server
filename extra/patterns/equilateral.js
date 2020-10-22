@@ -1,4 +1,4 @@
-function createequilatral(n)
+export default function createequilatral(n)
 {
     // using for white space
     let s = "";
@@ -12,4 +12,4 @@ function createequilatral(n)
     }
 }
 
-createequilatral(10)
+//createequilatral(10)
