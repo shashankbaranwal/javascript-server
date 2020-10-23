@@ -1,11 +1,11 @@
 let users = [
     {
-        TraineeEmail : 'shashank.baranawal@successive.tech',
-        ReviewerEmail : 'naman.parashar@successive.tech',
+        traineeEmail : 'shashank.baranawal@successive.tech',
+        reviewerEmail : 'naman.parashar@successive.tech',
     },
     {
-        TraineeEmail : 'shashank.baranwal@gmail.com',
-        ReviewerEmail : 'naman.parashar@gmail.com'
+        traineeEmail : 'shashank.baranwal@gmail.com',
+        reviewerEmail : 'naman.parashar@gmail.com'
     }
 ]
 
@@ -27,27 +27,27 @@ function validateEmail(email){
         return false;
     }
 }
-console.log(validateEmail(users[0]["TraineeEmail"]))
+console.log(validateEmail(users[0]["traineeEmail"]))
 
 function validateUsers(users){
     let countValid=0;
     let countInvalid=0;
     users.forEach(item => {
-        const {TraineeEmail,ReviewerEmail}= item;
-        if(validateEmail(TraineeEmail)){
-            a.push(TraineeEmail);
+        const {traineeEmail,reviewerEmail}= item;
+        if(validateEmail(traineeEmail)){
+            a.push(traineeEmail);
             countValid++;
         }
         else{
-            b.push(TraineeEmail);
+            b.push(traineeEmail);
             countInvalid++;
         }
-        if(validateEmail(ReviewerEmail)){
-            a.push(ReviewerEmail);
+        if(validateEmail(reviewerEmail)){
+            a.push(reviewerEmail);
             countValid++;
         }
         else{
-            b.push(ReviewerEmail);
+            b.push(reviewerEmail);
             countInvalid++;
         }
     })

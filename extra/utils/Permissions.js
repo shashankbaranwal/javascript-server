@@ -1,28 +1,51 @@
-let permissions = {
+let d;
+let permissions =
+{
     'getUsers': {
-        all: ['head-trainer'],
-        read: ['trainee', 'trainer'],
-        write: ['trainer'],
-        delete: [],
+    all: ['head-trainer'],
+    read : ['trainee', 'trainer'],
+    write : ['trainer'],
+    Delete: [],
     },
-    'getUsers1': {
-        all: ['head-trainer','trainee',],
-        read: [ 'trainer'],
-        write: ['trainer'],
-        delete: ['trainer'],
-    },
-    'getUsers2': {
+    'getUser1': {
         all: ['head-trainer'],
-        read: ['trainee'],
-        write: ['trainer', 'trainer'],
-        delete: [],
+        read : ['trainee', 'trainer'],
+        write : ['trainer'],
+        Delete: ['trainee'],
+        }
+            
     }
-}
-function hasPermission(moduleName, role, permissionType){
-    console.log(permissions[moduleName][permissionType].includes(role));
-};
-    
-hasPermission('getUsers1', 'trainee', 'all');
-hasPermission('getUsers', 'trainee', 'read');
-hasPermission('getUsers2', 'trainee', 'delete');
-hasPermission('getUser2', 'trainee', 'write');
+    const {getUsers,getUser1}= permissions;
+    let f;
+    function hasPermission(moduleName,role,permissionType)
+    {
+        const {all,read,write,Delete}=moduleName;
+         f = all.includes(role)
+
+        if(f==true)
+        {
+            return true
+        }
+        else
+        {
+            if(permissionType=="read")
+            {
+                f=read.includes(role)
+                return f;
+            }
+            else if(permissionType=="write"){
+                f=write.includes(role);
+                return f;
+            }
+            else if(permissionType=="Delete"){
+                f=Delete.includes(role)
+                return f;
+            }
+
+        }
+
+    }
+    d = hasPermission(getUsers,"head-trainer","Delete");
+    console.log(d);
+    d = hasPermission(getUser1,"trainer","Delete");
+    console.log(d);
