@@ -1,42 +1,29 @@
-import validateEmail from './helpers.js';
+import validateEmail from './helpers';
+//console.log(validateEmail(users[0]["traineeEmail"]))
 
-
-
-/* function validateEmail(email){
-    const regix = /\w+.\w+@successive.tech$/i;
-    return regix.test(email)
-}
-*/
-
-
-export function validateUsers(users){
-    let a = [];
-    let b = [];
+export default function validateUsers(users){
     let countValid=0;
     let countInvalid=0;
-    users.forEach(item => {
-        const {TraineeEmail}= item;
-        const {ReviewerEmail}= item;
-        if(validateEmail(TraineeEmail)){
-            a.push(TraineeEmail);
+    users.forEach(function(item) {
+        const {traineeEmail,reviewerEmail}= item;
+        if(validateEmail(item.traineeEmail)=== true && validateEmail(item.reviewerEmail)===true){
             countValid++;
         }
         else{
-            b.push(TraineeEmail);
             countInvalid++;
         }
-        if(validateEmail(ReviewerEmail)){
-            a.push(ReviewerEmail);
-            countValid++;
-        }
-        else{
-            b.push(ReviewerEmail);
-            countInvalid++;
-        }
+        // if(validateEmail(reviewerEmail)){
+        //     a.push(reviewerEmail);
+        //     countValid++;
+        // }
+        // else{
+        //     b.push(reviewerEmail);
+        //     countInvalid++;
+        // }
     })
-    console.log("Valid is :"+a);
-    console.log("invalid is :" +b)
-    console.log("Valid: "+countValid+" Invalid: "+countInvalid);
+    // console.log("Valid is :"+a);
+    // console.log("invalid is :" +b);
+    console.log("Valid: "+countValid+" , Invalid: "+countInvalid);
 };
     
-// validateUsers(users);
+//validateUsers(users);

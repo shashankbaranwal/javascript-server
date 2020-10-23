@@ -1,4 +1,4 @@
-export let users = [
+export const users = [
     {
         TraineeEmail : 'shashank.baranawal@successive.tech',
         ReviewerEmail : 'naman.parashar@successive.tech',
@@ -9,23 +9,18 @@ export let users = [
     }
 ]
 
-export let permissions = {
+export const permissions =
+{
     'getUsers': {
         all: ['head-trainer'],
         read: ['trainee', 'trainer'],
         write: ['trainer'],
-        delete: [],
+        Delete: [],
     },
-    'getUsers1': {
-        all: ['head-trainer','trainee',],
-        read: [ 'trainer'],
-        write: ['trainer'],
-        delete: ['trainer'],
-    },
-    'getUsers2': {
+    'getUser': {
         all: ['head-trainer'],
-        read: ['trainee'],
-        write: ['trainer', 'trainer'],
-        delete: [],
+        read: ['trainer'],
+        write: ['trainee'],
+        Delete: [],
     }
 }
