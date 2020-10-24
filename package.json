@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parashar-aakash/javascript-server.git"
+    "url": "git+https://github.com/shashankbaranwal/javascript-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/parashar-aakash/javascript-server/issues"
+    "url": "https://github.com/shashankbaranwal/javascript-server/issues"
   },
-  "homepage": "https://github.com/parashar-aakash/javascript-server#readme",
+  "homepage": "https://github.com/shashankbaranwal/javascript-server#readme",
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.1",
