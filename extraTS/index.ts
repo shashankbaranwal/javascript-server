@@ -15,10 +15,7 @@ const users: Iusers[] = [{
     traineeEmail: 'trainee1@successive.tech',
     reviewerEmail: 'reviewer1@successive.tech',
     },
-    {
-        traineeEmail:'urvashi.chaudhary@successive.tech',
-        reviewerEmail:'mohammad.adil@successive.tech',
-    },
+    
     {
         traineeEmail:'trainee@gmail.com',
         reviewerEmail:'user@gmail.com',
