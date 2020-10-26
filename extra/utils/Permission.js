@@ -14,20 +14,37 @@ const permissions =
     }
 }
 
-function hasPermissions (moduleName, role, permissionType) {
-    try
+const {getUsers,getUser1}= permissions;
+    let temp;
+    function hasPermission(moduleName,role,permissionType)
     {
-      if (permissions[moduleName].all.includes(role) || permissions[moduleName][permissionType].includes(role)){
-        console.log(`${role} has ${permissionType} permissions`)
-        return true
+        const {all,read,write,Delete}=moduleName;
+         temp = all.includes(role)
+
+        if(temp==true)
+        {
+            return true
+        }
+        else
+        {
+            if(permissionType=="read")
+            {
+                temp=read.includes(role)
+                return temp;  
+            }
+            else if(permissionType=="write"){
+                temp=write.includes(role);
+                return temp;
+            }
+            else if(permissionType=="Delete"){
+                temp=Delete.includes(role)
+                return temp;
+            }
+
+        }
+
     }
-    console.log(`${role} does not has ${permissionType} permissions`)
-    return false
-    }
-    catch(err) {
-      console.log(`Error: ${moduleName} is not a valid module Name`)
-      }
-    }
-hasPermissions("getUsers", "trainer", "read")
-hasPermissions("getUsers", "head-trainer", "write")
-hasPermissions("getUsers", "trainee", "all")
+let result = hasPermission(getUsers,"head-trainer","Delete");
+console.log(result);
+let result_1 = hasPermission(getUser1,"trainer","Delete");
+console.log(result_1);
