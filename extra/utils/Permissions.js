@@ -1,30 +1,36 @@
 import {permissions} from '../constant'
-export default function hasPermission(moduleName, role, permissionType) {
-    const { all, read, write, Delete } = moduleName;
-    console.log("--------",moduleName);
-    // const temp = permissions[moduleName];
-    // console.log("--------",temp);
-    let type;
-    if (type = all.includes(role))
+export default function hasPermission(moduleName,role,permissionType){
+    for(const [key,value] of Object.entries(permissions))
     {
-        return true;
-    }
-    else{
-        if (permissionType == 'read'){
-            type = read.includes(role)
-            return type;
+        if (key == moduleName)
+        {
+            if(value.all.includes(role))
+            {
+                return true;
+            }
+            else{
+                for(const [key1,value1] of Object.entries(value)){
+                    if(key1== permissionType){
+                        if(Object.values(value1).includes(role))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    else{
+                        continue;
+                    }
+
+                }
+            }
         }
-        else if(permissionType=="write"){
-            type = write.includes(role);
-            return type;
+        else{
+            continue;
         }
-        else if(permissionType=="Delete"){
-            type = Delete.includes(role)
-            return type;
-        }
+
     }
 }
-// let result = hasPermission(permissions.getUsers,"head-trainer","all");
+// let result = hasPermission(getUsers,"head-trainer","all");
 // console.log(result);
-// let result_1 = hasPermission(permissions.getUsers,"trainee","read");
+// let result_1 = hasPermission(getUsers,"trainee","read");
 // console.log(result_1);
