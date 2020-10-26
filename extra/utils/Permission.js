@@ -5,36 +5,29 @@ const permissions =
         read: ['trainer'],
         write: ['trainee'],
         Delete: [],
+    },
+    'getUser1': {
+        all: ['head-trainer'],
+        read : ['trainee', 'trainer'],
+        write : ['trainer'],
+        Delete: ['trainee'],
     }
 }
-function hasPermission(moduleName, role, permissionType) {
-    const { all, read, write, Delete } = moduleName;
-    console.log("--------",moduleName);
-    // const temp = permissions[moduleName];
-    // console.log("--------",temp);
-    let type;
-    if (type = all.includes(role))
+
+function hasPermissions (moduleName, role, permissionType) {
+    try
     {
-        return true;
+      if (permissions[moduleName].all.includes(role) || permissions[moduleName][permissionType].includes(role)){
+        console.log(`${role} has ${permissionType} permissions`)
+        return true
     }
-    else{
-        if (permissionType == 'read'){
-            type = read.includes(role)
-            return type;
-        }
-        else if(permissionType=="write"){
-            type = write.includes(role);
-            return type;
-        }
-        else if(permissionType=="Delete"){
-            type = Delete.includes(role)
-            return type;
-        }
+    console.log(`${role} does not has ${permissionType} permissions`)
+    return false
     }
-}
-let result = hasPermission(permissions.getUsers,"head-trainer","all");
-console.log(result);
-let result_1 = hasPermission(permissions.getUsers,"trainee","read");
-console.log(result_1);
-// result = hasPermission(getUser1,"trainer","Delete");
-// console.log(result);
+    catch(err) {
+      console.log(`Error: ${moduleName} is not a valid module Name`)
+      }
+    }
+hasPermissions("getUsers", "trainer", "read")
+hasPermissions("getUsers", "head-trainer", "write")
+hasPermissions("getUsers", "trainee", "all")

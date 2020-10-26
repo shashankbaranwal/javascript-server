@@ -9,21 +9,12 @@ let users = [
     }
 ]
 
-/*function validateEmail(email){
+function validateEmail(email){
     const regix = /\w+.\w+@successive.tech$/i;
     return regix.test(email)
-}*/
-
-function validateEmail(email){
-    const regex = /\w+.\w+@successive.tech$/i;
-    if(regex.test(email))
-    {
-        return true;
-    }
-    else{
-        return false;
-    }
 }
+
+
 //console.log(validateEmail(users[0]["traineeEmail"]))
 let a =[];
 let b =[];
@@ -32,7 +23,7 @@ function validateUsers(users){
     let countInvalid=0;
     users.forEach(item => {
         const {traineeEmail,reviewerEmail}= item;
-        if(validateEmail(item.traineeEmail)){
+        if(validateEmail(traineeEmail)){
             a.push(traineeEmail);
             countValid++;
         }
@@ -49,8 +40,8 @@ function validateUsers(users){
             countInvalid++;
         }
     })
-    // console.log("Valid is :"+a);
-    // console.log("invalid is :" +b);
+    console.log("Valid is :"+a);
+    console.log("invalid is :" +b);
     console.log("Valid: "+countValid+" , Invalid: "+countInvalid);
 };
     
