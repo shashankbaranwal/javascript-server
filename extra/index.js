@@ -1,6 +1,6 @@
 import { creatediamond , createequilatral } from './patterns'
 import {hasPermission,validateUsers} from './utils'
-import {permissions , users} from './constant'
+
 
 creatediamond(5)
 createequilatral(6)
@@ -8,4 +8,12 @@ createequilatral(6)
 let result = hasPermission(permissions.getUsers, 'head-trainer', 'Delete');
 console.log(result);
 
+
+const user =[{
+    traineeEmail: 'trainee1@successive.tech',
+    reviewerEmail: 'reviewer1@successive.tech',
+    },{
+        traineeEmail: 'trainee1@succssive.tech',
+        reviewerEmail: 'reviewer1@successive.tech',
+}];
 validateUsers(users);

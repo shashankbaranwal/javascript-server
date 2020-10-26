@@ -1,3 +1,4 @@
+import {user} from '../constant'
 import validateEmail from './helpers';
 //console.log(validateEmail(users[0]["traineeEmail"]))
 
