@@ -1,5 +1,4 @@
 import validateEmail from './helpers'
-
 //console.log(validateEmail(users[0]["traineeEmail"]))
 // let a =[];
 // let b =[];
