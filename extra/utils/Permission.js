@@ -14,42 +14,23 @@ const permissions =
     }
 }
 
+function hasPermission(moduleName,role,permissionType)
+{
+    const temp = permissions[moduleName];
 
-    function hasPermission(moduleName,role,permissionType)
-    {
-        const { all, read, write, Delete} = moduleName;
-        const temp = permissions[moduleName];
-        if(!temp)
-        {
-            return false;
-        }
-        else{
-            if(permissionType == "all"){
-                type = all;
-            }
-            if(permissionType == "read"){
-                type = read;
-            }
-            if(permissionType == "write"){
-                type = write;
-            }
-            if(permissionType == "Delete"){
-                type = Delete;
-            }
-            if(role == 'head-trainer'){
-                return true;
-            }
-            else{
-                if(type.includes(role)){
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-        }
+    if(!temp || !temp[permissionType] ){
+        return false;
     }
-let result = hasPermission('getUsers','head-trainer','all');
-console.log(result);
-let result_1 = hasPermission('getUser1','trainer','Delete');
-console.log(result_1);
+    if(temp['all'].includes(role)){
+        return true;
+    }
+
+    if(!temp[permissionType].includes(role)){
+        return false;
+    }
+    return true;
+}
+console.log(hasPermission('getUsers','head-trainer','all'));
+console.log(hasPermission('getUser1','trainer','all'));
+console.log(hasPermission('getUsers','trainee','write'));
+console.log(hasPermission('getUsers','trainee','read'));
