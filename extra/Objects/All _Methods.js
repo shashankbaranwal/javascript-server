@@ -118,3 +118,15 @@ const users = {
   
   console.log(Object.getOwnPropertyNames(users));
 
+
+
+
+
+  /* 
+let validateEmail = (email) => {
+    const regex = /\w+.\w+@successive.tech$/i;
+    return regex.test(email)
+}
+
+console.log(users[0].TraineeEmail);
+*/
