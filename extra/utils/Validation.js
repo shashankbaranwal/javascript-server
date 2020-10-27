@@ -53,7 +53,7 @@ function validateUsers(users){
     console.log("Valid is :"+a);
     console.log("invalid is :" +b);
     console.log("Valid: "+countValid+" , Invalid: "+countInvalid);
-};
+}
     
 
 //validateUsers(users);
