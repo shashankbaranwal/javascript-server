@@ -5,8 +5,9 @@ import {hasPermission,validateUsers} from './utils'
 creatediamond(5)
 createequilatral(6)
 // import {permissions , user} from './constants';
-let result = hasPermission(permissions.getUsers, 'head-trainer', 'Delete');
+let result = hasPermission('getUsers','head-trainer','all');
 console.log(result);
+console.log(hasPermission('getUser1','trainer','all'));
 
 
 const user =[{
