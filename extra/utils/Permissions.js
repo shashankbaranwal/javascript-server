@@ -1,19 +1,15 @@
-import {permissions} from '../constant'
+import permissions from '../constant';
 export default function hasPermission(moduleName,role,permissionType)
 {
-    const temp = permissions[moduleName];
-
-    if(!temp || !temp[permissionType] ){
-        return false;
+    if(!moduleName.hasOwnProperty(permissionType)){
+        console.log('false');
     }
-    if(temp['all'].includes(role)){
-        return true;
+    else if(moduleName[permissionType].includes(role) || (role=='head-trainer')){
+        console.log('true');
     }
-
-    if(!temp[permissionType].includes(role)){
-        return false;
+    else{
+        console.log('false');
     }
-    return true;
 }
 // console.log(hasPermission('getUsers','head-trainer','all'));
 // console.log(hasPermission('getUser1','trainer','all'));
