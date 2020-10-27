@@ -2,28 +2,6 @@ feature/39519
 import {user} from '../constant'
 import {validateEmail} from './helpers'
 
-
-let a =[];
-let b =[];
-export default function validateUsers(users){
-
-let users = [
-    {
-        traineeEmail : 'shashank.baranawal@successive.tech',
-        reviewerEmail : 'naman.parashar@successive.tech',
-    },
-    {
-        traineeEmail : 'shashank.baranwal@gmail.com',
-        reviewerEmail : 'naman.parashar@gmail.com'
-    }
-]
-
-function validateEmail(email){
-    const regix = /\w+.\w+@successive.tech$/i;
-    return regix.test(email)
-}
-
-
 //console.log(validateEmail(users[0]["traineeEmail"]))
 let a =[];
 let b =[];
