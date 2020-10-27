@@ -1,28 +1,13 @@
-let users = [
-    {
-        traineeEmail : 'shashank.baranawal@successive.tech',
-        reviewerEmail : 'naman.parashar@successive.tech',
-    },
-    {
-        traineeEmail : 'shashank.baranwal@gmail.com',
-        reviewerEmail : 'naman.parashar@gmail.com'
-    }
-]
+import validateEmail from './helpers'
 
-function validateEmail(email){
-    const regix = /\w+.\w+@successive.tech$/i;
-    return regix.test(email)
-}
+export default function validateUsers(users){
 
-
-//console.log(validateEmail(users[0]["traineeEmail"]))
-let a =[];
-let b =[];
-function validateUsers(users){
     let countValid=0;
     let countInvalid=0;
-    users.forEach(item => {
-        const {traineeEmail,reviewerEmail}= item;
+    let a =[];
+    let b =[];
+    users.forEach(function(item){
+        const {traineeEmail, reviewerEmail} = item;
         if(validateEmail(traineeEmail)){
             a.push(traineeEmail);
             countValid++;
@@ -44,6 +29,5 @@ function validateUsers(users){
     console.log("invalid is :" +b);
     console.log("Valid: "+countValid+" , Invalid: "+countInvalid);
 };
-    
-validateUsers(users);
+
 
