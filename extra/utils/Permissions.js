@@ -15,7 +15,3 @@ export default function hasPermission(moduleName,role,permissionType)
     }
     return true;
 }
-// console.log(hasPermission('getUsers','head-trainer','all'));
-// console.log(hasPermission('getUser1','trainer','all'));
-// console.log(hasPermission('getUsers','trainee','write'));
-// console.log(hasPermission('getUsers','trainee','read'));
