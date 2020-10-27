@@ -1,4 +1,3 @@
-feature/39519
 import {user} from '../constant'
 import {validateEmail} from './helpers'
 
