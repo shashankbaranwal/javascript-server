@@ -14,37 +14,42 @@ const permissions =
     }
 }
 
-const {getUsers,getUser1}= permissions;
-    let temp;
+
     function hasPermission(moduleName,role,permissionType)
     {
-        const {all,read,write,Delete}=moduleName;
-         temp = all.includes(role)
-
-        if(temp==true)
+        const { all, read, write, Delete} = moduleName;
+        const temp = permissions[moduleName];
+        if(!temp)
         {
-            return true
+            return false;
         }
-        else
-        {
-            if(permissionType=="read")
-            {
-                temp=read.includes(role)
-                return temp;  
+        else{
+            if(permissionType == "all"){
+                type = all;
             }
-            else if(permissionType=="write"){
-                temp=write.includes(role);
-                return temp;
+            if(permissionType == "read"){
+                type = read;
             }
-            else if(permissionType=="Delete"){
-                temp=Delete.includes(role)
-                return temp;
+            if(permissionType == "write"){
+                type = write;
             }
-
+            if(permissionType == "Delete"){
+                type = Delete;
+            }
+            if(role == 'head-trainer'){
+                return true;
+            }
+            else{
+                if(type.includes(role)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
         }
-
     }
-let result = hasPermission(getUsers,"head-trainer","Delete");
+let result = hasPermission('getUsers','head-trainer','all');
 console.log(result);
-let result_1 = hasPermission(getUser1,"trainer","Delete");
+let result_1 = hasPermission('getUser1','trainer','Delete');
 console.log(result_1);
