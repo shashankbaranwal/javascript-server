@@ -1,3 +1,4 @@
+
 const permissions =
 {
     'getUsers': {

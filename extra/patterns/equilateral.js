@@ -1,3 +1,4 @@
+
 function createequilatral(n)
 {
     // using for white space
@@ -11,5 +12,6 @@ function createequilatral(n)
         j--;
     }
 }
+
 
 createequilatral(10)

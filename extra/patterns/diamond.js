@@ -1,3 +1,4 @@
+
 function creatediamond(n)
 {
     // using for white space
@@ -17,5 +18,3 @@ function creatediamond(n)
         j++;
     }
 }
-
-creatediamond(5)
