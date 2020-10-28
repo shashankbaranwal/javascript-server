@@ -1,8 +1,8 @@
 import validateEmail from './helpers'
 
 export default function validateUsers(users : IUsers[]) : void{
-    let countValid =0;
-    let countInvalid  =0;
+    let countValid : number =0;
+    let countInvalid : number =0;
     let a : string[] = [];
     let b : string[] = [];
     users.forEach(function(item){

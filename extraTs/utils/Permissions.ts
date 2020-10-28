@@ -1,5 +1,5 @@
 import { permissions } from '../constant';
-export default function hasPermission( moduleName: string , role: string , permissionType: string)
+export default function hasPermission( moduleName: string , role: string , permissionType: string) : boolean
 {
     console.log(permissions);
     console.log(moduleName);
