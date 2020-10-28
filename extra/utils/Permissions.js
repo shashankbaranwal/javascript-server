@@ -15,5 +15,3 @@ export default function hasPermission(moduleName,role,permissionType)
     }
     return true;
 }
-
->>>>>>> 146c3daaffaa716bb8480bc3e09ba73da5e7895f
