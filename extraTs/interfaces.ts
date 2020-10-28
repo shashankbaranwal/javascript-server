@@ -1,12 +1,16 @@
-interface IPermission {
-    'getUsers' :{
-        all: String[];
-        read: String[];
-        write:String[];
-        delete:String[];
-    }
-}
 interface IUsers {
     traineeEmail: string;
     reviewerEmail: string;
 };
+
+type access = {
+    all:string[];
+    read: string[];
+    write: string[];
+    Delete: string[];
+}
+
+interface IPermissions {
+    getUsers: access;
+    getUser: access;
+}

@@ -1,3 +1,4 @@
+
 import { creatediamond , createequilatral } from './patterns'
 import {hasPermission,validateUsers} from './utils'
 import { users }  from './constant';

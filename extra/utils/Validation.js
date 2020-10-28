@@ -1,6 +1,8 @@
+
 import validateEmail from './helpers'
 
 export default function validateUsers(users){
+
     let countValid=0;
     let countInvalid=0;
     let a =[];
@@ -28,3 +30,4 @@ export default function validateUsers(users){
     console.log("invalid is :" +b);
     console.log("Valid: "+countValid+" , Invalid: "+countInvalid);
 };
+

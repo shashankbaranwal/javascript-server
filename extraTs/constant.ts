@@ -1,5 +1,3 @@
-
-
 export const users : IUsers[] = [
     {
         traineeEmail : 'shashank.baranwal@gmail.com',
@@ -11,11 +9,17 @@ export const users : IUsers[] = [
     }
 ]
 
-export let permissions: IPermission = {
+export let permissions: IPermissions = {
     'getUsers': {
     all: ['head-trainer'],
     read : ['trainee', 'trainer'],
     write : ['trainer'],
-    delete: [],
+    Delete: [],
+    },
+    'getUser': {
+        all: ['head-trainer'],
+        read : ['trainee', 'trainer'],
+        write : ['trainer'],
+        Delete: []
     }
 };
