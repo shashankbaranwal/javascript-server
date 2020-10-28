@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
     "module": "commonjs",
+<<<<<<< HEAD
     "target": "es6",
+=======
+    "target": "es2017",
+>>>>>>> 555624ce78ed69b4300098fea8dc7d21d313c47a
     "noImplicitAny": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -21,8 +25,15 @@
     },
     "exclude": ["dist"],
     "include": [
+<<<<<<< HEAD
     "extraTs"
     ],
     "types": ["src/types"]
     }
     
+=======
+    "src"
+    ],
+    "types": ["src/types"]
+    }
+>>>>>>> 555624ce78ed69b4300098fea8dc7d21d313c47a
