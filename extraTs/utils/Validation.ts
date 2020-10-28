@@ -1,10 +1,10 @@
 import validateEmail from './helpers'
 
-export default function validateUsers(users){
-    let countValid=0;
-    let countInvalid=0;
-    let a =[];
-    let b =[];
+export default function validateUsers(users : IUsers[]) : void{
+    let countValid : number=0;
+    let countInvalid : number =0;
+    let a : string[] = [];
+    let b : string[] = [];
     users.forEach(function(item){
         const {traineeEmail, reviewerEmail} = item;
         if(validateEmail(traineeEmail)){

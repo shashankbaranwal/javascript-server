@@ -1,11 +1,11 @@
 export const users = [
     {
-        TraineeEmail : 'shashank.baranawal@successive.tech',
-        ReviewerEmail : 'naman.parashar@successive.tech',
+        traineeEmail : 'shashank.baranwal@gmail.com',
+        reviewerEmail : 'naman.parashar@gmail.com'
     },
     {
-        TraineeEmail : 'shashank.baranwal@gmail.com',
-        ReviewerEmail : 'naman.parashar@gmail.com'
+        traineeEmail : 'shashank.baranwal@successive.tech',
+        reviewerEmail : 'naman.parashar@succesive.tech'
     }
 ]
 
