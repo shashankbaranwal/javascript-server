@@ -1,5 +1,6 @@
 
 export default function createequilatral(n)
+
 {
     // using for white space
     let s = "";
