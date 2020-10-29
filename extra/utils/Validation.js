@@ -1,4 +1,3 @@
-
 import validateEmail from './helpers'
 
 export default function validateUsers(users){
