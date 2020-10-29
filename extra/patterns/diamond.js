@@ -19,4 +19,3 @@ export default function creatediamond(n)
 }
 
 //creatediamond(5)
-
