@@ -6,7 +6,6 @@ export const users = [
     {
         traineeEmail : 'shashank.baranwal@successive.tech',
         reviewerEmail : 'naman.parashar@succesive.tech'
-
     }
 ]
 

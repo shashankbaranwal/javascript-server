@@ -1,5 +1,4 @@
 {
-
     "defaultSeverity": "error",
     
     "extends": [
@@ -135,4 +134,5 @@
     },
     
     "rulesDirectory": []
-    }
+
+}
