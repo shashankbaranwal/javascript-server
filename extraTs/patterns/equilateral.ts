@@ -1,5 +1,4 @@
-export default function createequilatral(n)
-
+export default function createequilatral(n : number) : void
 {
     // using for white space
     let s = "";

@@ -1,5 +1,4 @@
-export default function createequilatral(n)
-
+export default function creatediamond(n : number) : void
 {
     // using for white space
     let s = "";
@@ -11,6 +10,12 @@ export default function createequilatral(n)
         s="";
         j--;
     }
+    for(let i=n;i>=1;i--){
+        s=" ".repeat(j);
+        console.log(s,' *'.repeat(i));
+        s="";
+        j++;
+    }
 }
 
-//createequilatral(10)
+//creatediamond(5)

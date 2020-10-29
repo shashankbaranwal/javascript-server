@@ -1,5 +1,4 @@
 export default function creatediamond(n)
-
 {
     // using for white space
     let s = "";

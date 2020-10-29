@@ -30,4 +30,3 @@ export default function validateUsers(users){
     console.log("Valid: "+countValid+" , Invalid: "+countInvalid);
 };
 
-
