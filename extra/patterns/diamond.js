@@ -1,4 +1,5 @@
-function creatediamond(n)
+export default function creatediamond(n)
+
 {
     // using for white space
     let s = "";
@@ -18,4 +19,5 @@ function creatediamond(n)
     }
 }
 
-creatediamond(5)
+//creatediamond(5)
+
