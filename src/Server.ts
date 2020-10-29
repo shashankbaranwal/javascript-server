@@ -2,10 +2,12 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { notFoundHandler, errorHandler } from './libs/routes';
 
+import routes from './Router';
+
 class Server{
-    app
+    private app: any
     constructor(private config){
-        this.app=express()
+        this.app=express();
     }
     bootstrap(){
         this.setupRouts()
