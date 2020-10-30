@@ -21,26 +21,6 @@ class Server{
 
         this.app.use(notFoundHandler);
         this.app.use(errorHandler);
-        this.app.use((req, res, next) => {
-            next({
-                error: "Not Found",
-                code: 404
-                
-            })
-        })
-
-//         this.app.use((err, req, res, next) => {
-//             console.log(err);
-//             res.json(
-//                 {
-//                     "error ": err.error,
-//                     status : err.code,
-//                     message : err. message || "Error",
-//                     timeStamp: new Date()
-                 
-//                 }
-//             )
-//         });
         return this;
     }
     public initBodyParser(){
