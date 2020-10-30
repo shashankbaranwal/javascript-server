@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { notFoundHandler, errorHandler } from './libs/routes';
+import  errorHandler  from './libs/routes/errorHandler'
+import  notFoundRoute from './libs/routes/notFoundRoute'
 
 class Server{
     app
@@ -28,18 +29,18 @@ class Server{
             })
         })
 
-        this.app.use((err, req, res, next) => {
-            console.log(err);
-            res.json(
-                {
-                    "error ": err.error,
-                    status : err.code,
-                    message : err. message || "Error",
-                    timeStamp: new Date()
+//         this.app.use((err, req, res, next) => {
+//             console.log(err);
+//             res.json(
+//                 {
+//                     "error ": err.error,
+//                     status : err.code,
+//                     message : err. message || "Error",
+//                     timeStamp: new Date()
                  
-                }
-            )
-        });
+//                 }
+//             )
+//         });
         return this;
     }
     public initBodyParser(){
