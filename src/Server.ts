@@ -1,14 +1,15 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import  {errorHandler}  from './libs/routes/errorHandler'
-import  {notFoundRoute} from './libs/routes/notFoundRoute'
-
 import routes from './Router';
 
+import  errorHandler  from './libs/routes/errorHandler'
+import  notFoundRoute from './libs/routes/notFoundRoute'
+
 class Server{
-    private app: any
+    app
     constructor(private config){
-        this.app=express();
+        this.app=express()
+
     }
     bootstrap(){
         this.setupRouts()
