@@ -1,44 +1,49 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import routes from './Router';
-
 import  errorHandler  from './libs/routes/errorHandler'
-import  notFoundRoute from './libs/routes/notFoundRoute'
+import  notFoundRoute from './libs/routes/notFoundRoute';
+//import mainRouter from './Router';
+import * as bodyparser from 'body-parser';
 
-class Server{
-    app
-    constructor(private config){
-        this.app=express()
+class Server {
 
-    }
-    bootstrap(){
-        this.setupRouts()
-        return this;
-    }
-    public setupRouts(){
-        const { app }=this;
-        app.use('/health-check',(req, res)=>{
-            console.log("inside Second middleware");
-            res.send("I am OK");
-        });
+private app: any;
+constructor(private config) {
+this.app = express();
+}
+//public initBodyParser(){
+// this.app.use(bodyparser.json());
+//}
+bootstrap() {
+this.initBodyParser();
+this.SetupRoutes();
+return this;
+}
+SetupRoutes() {
+    //const {app} = this;
+    this.app.get('/health-check', (req, res, next) => {
+    res.send('i am ok');
+});
+this.app.use('/api', 'routes');
 
-        this.app.use(notFoundHandler);
-        this.app.use(errorHandler);
-        return this;
-    }
-    public initBodyParser(){
-        this.app.use(bodyParser.json( {type : 'application/**json'}))
-    }
-    run(){
-        const {app, config:{PORT}}=this;
-        app.listen(PORT,(err)=>{
-            if (err) {
-                console.log( err );
-                
-            }
-            console.log(`App is running on port ${PORT}`);
+this.app.use(notFoundRoute);
+this.app.use(errorHandler);
 
-        })
+}
+public initBodyParser(){
+    this.app.use(bodyparser.json());
+}
+run() {
+    const {app, config: {PORT}} = this;
+    app.listen(PORT, (err) => {
+    if (err) {
+        console.log(err);
     }
+    console.log(`App is running on port ${PORT}`);
+    // tslint:disable-next-line: semicolon
+    });
+    return this;
+}
 }
 export default Server;
