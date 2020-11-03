@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 
 export default ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
     const errors = [];
-    console.log( 'Inside ValidationHandler Middleware' );
+    console.log( 'Inside Middleware' );
     console.log( req.body );
     console.log( req.query );
     console.log(Object.keys( req.query ).length );
@@ -60,11 +60,6 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
                 });
             }
         }
-        // if (obj.default) {
-        //     if ( values[0] === '' ) {
-        //        values[0] === obj.default;
-        //     }
-        // }
         if (obj.number) {
             if (isNaN(values[0]) || values[0] === undefined) {
                 errors.push({

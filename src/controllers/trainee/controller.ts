@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from "express";
 class traineeController {
     static instance: traineeController
 
@@ -10,7 +9,7 @@ class traineeController {
         return traineeController.instance;
     }
 
-    get(req: Request, res: Response, next: NextFunction) {
+    get(req, res, next) {
         try {
             var console: Console
             console.log("Inside get method of Trainee Controller");
@@ -19,7 +18,7 @@ class traineeController {
                 message: "Trainee displayed successfully",
                 data: [
                     {
-                        name: "Shashank",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
@@ -30,7 +29,7 @@ class traineeController {
         }
     }
 
-    create(req: Request, res: Response, next: NextFunction) {
+    create(req, res, next) {
         try {
             var console: Console
             console.log("Inside post method of Trainee Controller");
@@ -39,7 +38,7 @@ class traineeController {
                 message: "Trainee created  successfully",
                 data: [
                     {
-                        name: "Shashank",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
@@ -50,7 +49,7 @@ class traineeController {
         }
     }
 
-    update(req: Request, res: Response, next: NextFunction) {
+    update(req, res, next) {
         try {
             var console: Console
             console.log("Inside update method of Trainee Controller");
@@ -59,7 +58,7 @@ class traineeController {
                 message: "Trainee updated successfully",
                 data: [
                     {
-                        name: "Shashank",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
@@ -69,7 +68,7 @@ class traineeController {
             console.log("Inside err", err);
         }
     }
-    delete(req: Request, res: Response, next: NextFunction) {
+    delete(req, res, next) {
         try {
             var console: Console
             console.log("Inside delete method of Trainee Controller");
@@ -78,7 +77,7 @@ class traineeController {
                 message: "Trainee deleted successfully",
                 data: [
                     {
-                        name: "Shashank",
+                        name: "Roshan",
                         address: "Noida"
                     }
                 ]
