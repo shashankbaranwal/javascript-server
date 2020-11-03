@@ -1,56 +1,57 @@
+import { Request, Response, NextFunction } from "express";
 class traineeController {
     static instance: traineeController
 
-    static getInstance(){
-        if(traineeController.instance){
+    static getInstance() {
+        if (traineeController.instance) {
             return traineeController.instance
         }
         traineeController.instance = new traineeController();
         return traineeController.instance;
     }
 
-    get(req, res, next){
-        try{
+    get(req: Request, res: Response, next: NextFunction) {
+        try {
             var console: Console
             console.log("Inside get method of Trainee Controller");
 
             res.send({
-                message: "Trainee fetched successfully",
+                message: "Trainee displayed successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Shashank",
                         address: "Noida"
                     }
                 ]
             });
         }
-        catch(err){
+        catch (err) {
             console.log("Inside err", err);
         }
     }
 
-    create(req, res, next){
-        try{
+    create(req: Request, res: Response, next: NextFunction) {
+        try {
             var console: Console
             console.log("Inside post method of Trainee Controller");
 
             res.send({
-                message: "Trainee created successfully",
+                message: "Trainee created  successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Shashank",
                         address: "Noida"
                     }
                 ]
             });
         }
-        catch(err){
+        catch (err) {
             console.log("Inside err", err);
         }
     }
 
-    update(req, res, next){
-        try{
+    update(req: Request, res: Response, next: NextFunction) {
+        try {
             var console: Console
             console.log("Inside update method of Trainee Controller");
 
@@ -58,18 +59,18 @@ class traineeController {
                 message: "Trainee updated successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Shashank",
                         address: "Noida"
                     }
                 ]
             });
         }
-        catch(err){
+        catch (err) {
             console.log("Inside err", err);
         }
     }
-    delete(req, res, next){
-        try{
+    delete(req: Request, res: Response, next: NextFunction) {
+        try {
             var console: Console
             console.log("Inside delete method of Trainee Controller");
 
@@ -77,13 +78,13 @@ class traineeController {
                 message: "Trainee deleted successfully",
                 data: [
                     {
-                        name: "Trainee",
+                        name: "Shashank",
                         address: "Noida"
                     }
                 ]
             });
         }
-        catch(err){
+        catch (err) {
             console.log("Inside err", err);
         }
     }
