@@ -18,7 +18,7 @@ class Server {
     SetupRoutes() {
     //const {app} = this;
 
-    this.app.get('/health-check', (req, res, next) => {
+    this.app.get('/health-check', ( req, res, next) => {
         res.send('i am ok');
         next()
     });
@@ -37,7 +37,6 @@ class Server {
                 console.log(err);
         }
         console.log(`App is running on port ${PORT}`);
-        // tslint:disable-next-line: semicolon
         });
     }
 }
