@@ -1,5 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import routes from './Router';
+
 import  errorHandler  from './libs/routes/errorHandler'
 import  notFoundRoute from './libs/routes/notFoundRoute'
 
@@ -7,6 +9,7 @@ class Server{
     app
     constructor(private config){
         this.app=express()
+
     }
     bootstrap(){
         this.setupRouts()
@@ -19,7 +22,8 @@ class Server{
             res.send("I am OK");
         });
 
-        this.app.use(notFoundHandler);
+        this.app.use('/api', routes);
+        this.app.use(notFoundRoute);
         this.app.use(errorHandler);
         return this;
     }
