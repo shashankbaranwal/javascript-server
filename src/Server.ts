@@ -22,7 +22,8 @@ class Server{
             res.send("I am OK");
         });
 
-        this.app.use(notFoundHandler);
+        this.app.use('/api', routes);
+        this.app.use(notFoundRoute);
         this.app.use(errorHandler);
         return this;
     }
