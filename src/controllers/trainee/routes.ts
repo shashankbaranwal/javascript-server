@@ -11,6 +11,5 @@ traineeRouter.route('/')
     .post(validationHandler(validation.create),traineeController.create)
     .put(validationHandler(validation.update),traineeController.update)
     .delete(validationHandler(validation.Delete),traineeController.delete)
-    traineeRouter.route('/:id')
-    .delete(validationHandler(validation.Delete),traineeController.delete)
+    
 export default traineeRouter;
