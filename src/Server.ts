@@ -4,6 +4,7 @@ import mainRouter from './router';
 import  errorHandler  from './libs/routes/errorHandler'
 import  notFoundRoute from './libs/routes/notFoundRoute'
 
+
 class Server{
     app
     constructor(private config){

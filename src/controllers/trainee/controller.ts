@@ -18,10 +18,11 @@ class traineeController {
                 message: "Trainees fetched successfully",
                 data: [
                     {
-                        name: "Shashank",
-                        address: "Noida"
-                    }
-                ]
+                    name: "Trainee1",
+                    address: "Noida"
+                }
+            ]
+
             });
 
         }
@@ -36,15 +37,13 @@ class traineeController {
         try{
             console.log("Inside post method of Trainee Controller");
             res.send({
+                message: "Trainees created successfully",
+                data: {
+                    name: "Trainee1",
+                    address: "Noida"
+                }
+             });
 
-                message: "Trainee created  successfully",
-                data: [
-                    {
-                        name: "Shashank",
-                        address: "Noida"
-                    }
-                ]
-            });
         }
         catch(err){
             console.log("inside err", err);
@@ -58,18 +57,16 @@ class traineeController {
         try{
             console.log("Inside put method of Trainee Controller");
             res.send({
+                message: "Trainees updated successfully",
+                data: {
+                    name: "Trainee1",
+                    address: "Noida"
+                }
+             });
 
-                message: "Trainee updated successfully",
-                data: [
-                    {
-                        name: "Shashank",
-                        address: "Noida"
-                    }
-                ]
-            });
-        }
-        catch (err) {
-            console.log("Inside err", err);
+        }catch(err){
+            console.log("inside err", err);
+
         }
 
     }
@@ -78,18 +75,16 @@ class traineeController {
         try{
             console.log("Inside delete method of Trainee Controller");
             res.send({
+                message: "Trainees Deleted successfully",
+                data: {
+                    name: "Trainee1",
+                    address: "Noida"
+                }
+             });
 
-                message: "Trainee deleted successfully",
-                data: [
-                    {
-                        name: "Shashank",
-                        address: "Noida"
-                    }
-                ]
-            });
-        }
-        catch (err) {
-            console.log("Inside err", err);
+        }catch(err){
+            console.log("inside err", err);
+
         }
 
     }

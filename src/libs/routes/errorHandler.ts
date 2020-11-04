@@ -7,5 +7,5 @@ export default function errorHandler (err, req: Request, res: Response, next: Ne
         message: err.message || "Error",
         timestamp: new Date()
         
-    })
+    });
 }
