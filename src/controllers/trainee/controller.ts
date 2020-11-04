@@ -44,6 +44,7 @@ class traineeController {
                 }
              });
 
+
         }
         catch(err){
             console.log("inside err", err);
@@ -66,7 +67,6 @@ class traineeController {
 
         }catch(err){
             console.log("inside err", err);
-
         }
 
     }
@@ -75,6 +75,7 @@ class traineeController {
         try{
             console.log("Inside delete method of Trainee Controller");
             res.send({
+
                 message: "Trainees Deleted successfully",
                 data: {
                     name: "Trainee1",
@@ -89,5 +90,5 @@ class traineeController {
 
     }
 }
-
 export default traineeController.getInstance();
+
