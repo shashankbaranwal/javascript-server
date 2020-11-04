@@ -4,5 +4,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
     next({
         err: 'Not Found',
         code: 404
-    })
+    });
 };

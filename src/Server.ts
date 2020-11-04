@@ -2,21 +2,23 @@ import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import { notFoundRoute, errorHandler } from './libs/routes';
 import mainRouter from './router';
+import Database from './libs/Database';
+import { disconnect } from 'process';
 class Server {
-    app
+    app;
     constructor(private config) {
-        this.app = express()
+        this.app = express();
 
     }
     bootstrap() {
-        this.setupRouts()
+        this.setupRouts();
         return this;
     }
     public setupRouts() {
         const { app } = this;
-        app.use('/health-check', (req, res) => {
-            console.log("inside Second middleware");
-            res.send("I am OK");
+        app.use('/health-check', (_req, res) => {
+            console.log('inside Second middleware');
+            res.send('I am OK');
         });
         this.app.use('/api', mainRouter);
         this.app.use(notFoundRoute);
@@ -24,16 +26,25 @@ class Server {
         return this;
     }
     public initBodyParser() {
-        this.app.use(bodyparser.json({ type: 'application/**json' }))
+        this.app.use(bodyparser.json({ type: 'application/**json' }));
     }
     run() {
         const { app, config: { PORT } } = this;
-        app.listen(PORT, (err) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(`App is running on port ${PORT}`);
+        Database.open('mongodb://localhost:27017/express-training')
+        .then((res) => {
+            console.log('Succesfully connected to Mongo');
+            app.listen(PORT, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(`App is running on port ${PORT}`);
+                    Database.disconnect();
+                }
+            });
         })
+        .catch(err => console.log(err));
+        return this;
     }
 }
 export default Server;

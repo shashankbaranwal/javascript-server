@@ -6,7 +6,7 @@ export default function hasPermission(moduleName: string, role: string, permissi
     if (!temp || !temp[permissionType]) {
         return false;
     }
-    if (temp['all'].includes(role)) {
+    if (temp.all.includes(role)) {
         return true;
     }
     if (!temp[permissionType].includes(role)) {
