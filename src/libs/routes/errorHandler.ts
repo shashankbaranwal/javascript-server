@@ -6,6 +6,6 @@ export default function errorHandler (err, req: Request, res: Response, next: Ne
         status: err.code,
         message: err.message || "Error",
         timestamp: new Date()
-        
     });
 }
+

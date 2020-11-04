@@ -21,7 +21,6 @@ class Server{
             console.log("inside Second middleware");
             res.send("I am OK");
         });
-
         this.app.use('/api', mainRouter);
         this.app.use(notFoundRoute);
         this.app.use(errorHandler);
