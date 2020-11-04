@@ -4,7 +4,7 @@ interface IUsers {
 };
 
 type access = {
-    all:string[];
+    all: string[];
     read: string[];
     write: string[];
     Delete: string[];

@@ -16,7 +16,7 @@ export default (config) => (
                 key: `${key}`,
                 location: `${keys.in}`,
                 errorMessage: `${keys.errorMessage || 'required'}`
-                };
+            };
             errors.push(err);
         }
         if ((!keys.required) && !(request)) {
@@ -24,21 +24,21 @@ export default (config) => (
         }
         if (
             (((keys.number) && !(Number.isInteger(Number(request)))) ||
-            ((keys.string) && !(typeof request === 'string')))
+                ((keys.string) && !(typeof request === 'string')))
         ) {
             const err = {
                 key: `${key}`,
                 location: `${keys.in}`,
                 errorMessage: `${keys.errorMessage || 'incorrect Type'}`
-                };
+            };
             errors.push(err);
         }
-        if ((keys.isObject) && !(typeof(request) === 'object')) {
+        if ((keys.isObject) && !(typeof (request) === 'object')) {
             const err = {
                 key: `${key}`,
                 location: `${keys.in}`,
                 errorMessage: `${keys.errorMessage || 'not an Object'}`
-                };
+            };
             errors.push(err);
         }
         if ((regex) && (!regex.test(request))) {
@@ -46,7 +46,7 @@ export default (config) => (
                 key: `${key}`,
                 location: `${keys.in}`,
                 errorMessage: `${request} is not valid`
-                };
+            };
             errors.push(err);
         }
     });
