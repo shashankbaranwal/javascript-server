@@ -1,7 +1,4 @@
 import { IConfig } from './IConfig';
-// import * as dotenv from 'dotenv';
-// console.log(dotenv);
-
 
 // tslint:disable-next-line: no-var-requires
 const envVars = require ('dotenv').config();

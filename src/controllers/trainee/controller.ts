@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+// tslint:disable-next-line: class-name
 class traineeController {
     static instance: traineeController;
 
-    static getInstance(){
-        if(traineeController.instance){
-            return traineeController.instance
+    static getInstance() {
+        if (traineeController.instance) {
+            return traineeController.instance;
         }
 
         traineeController.instance = new traineeController();
@@ -12,42 +13,42 @@ class traineeController {
     }
 
     get( req: Request, res: Response, next: NextFunction ) {
-        try{
-            console.log("Inside get method of Trainee Controller");
+        try {
+            console.log('Inside get method of Trainee Controller');
             res.send({
-                message: "Trainees fetched successfully",
+                message: 'Trainees fetched successfully',
                 data: [
                     {
-                    name: "Trainee1",
-                    address: "Noida"
+                    name: 'Trainee1',
+                    address: 'Noida'
                 }
             ]
 
             });
 
         }
-        catch(err){
-            console.log("inside err", err);
+        catch (err) {
+            console.log('inside err', err);
 
         }
 
     }
 
     create( req: Request, res: Response, next: NextFunction ) {
-        try{
-            console.log("Inside post method of Trainee Controller");
+        try {
+            console.log('Inside post method of Trainee Controller');
             res.send({
-                message: "Trainees created successfully",
+                message: 'Trainees created successfully',
                 data: {
-                    name: "Trainee1",
-                    address: "Noida"
+                    name: 'Trainee1',
+                    address: 'Noida'
                 }
              });
 
 
         }
-        catch(err){
-            console.log("inside err", err);
+        catch (err) {
+            console.log('inside err', err);
 
         }
 
@@ -55,36 +56,36 @@ class traineeController {
 
 
     update( req: Request, res: Response, next: NextFunction ) {
-        try{
-            console.log("Inside put method of Trainee Controller");
+        try {
+            console.log('Inside put method of Trainee Controller');
             res.send({
-                message: "Trainees updated successfully",
+                message: 'Trainees updated successfully',
                 data: {
-                    name: "Trainee1",
-                    address: "Noida"
+                    name: 'Trainee1',
+                    address: 'Noida'
                 }
              });
 
-        }catch(err){
-            console.log("inside err", err);
+        } catch (err) {
+            console.log('inside err', err);
         }
 
     }
 
     Delete( req: Request, res: Response, next: NextFunction ) {
-        try{
-            console.log("Inside delete method of Trainee Controller");
+        try {
+            console.log('Inside delete method of Trainee Controller');
             res.send({
 
-                message: "Trainees Deleted successfully",
+                message: 'Trainees Deleted successfully',
                 data: {
-                    name: "Trainee1",
-                    address: "Noida"
+                    name: 'Trainee1',
+                    address: 'Noida'
                 }
              });
 
-        }catch(err){
-            console.log("inside err", err);
+        } catch (err) {
+            console.log('inside err', err);
 
         }
 
