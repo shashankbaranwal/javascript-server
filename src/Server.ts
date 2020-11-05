@@ -31,19 +31,19 @@ class Server {
     run() {
         const { app, config: { PORT } } = this;
         Database.open('mongodb://localhost:27017/express-training')
-        .then((res) => {
-            console.log('Succesfully connected to Mongo');
-            app.listen(PORT, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log(`App is running on port ${PORT}`);
-                    Database.disconnect();
-                }
-            });
-        })
-        .catch(err => console.log(err));
+            .then((res) => {
+                console.log('Succesfully connected to Mongo');
+                app.listen(PORT, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log(`App is running on port ${PORT}`);
+                       // Database.disconnect();
+                    }
+                });
+            })
+            .catch(err => console.log(err));
         return this;
     }
 }

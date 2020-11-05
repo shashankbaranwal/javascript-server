@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-
+import Seed from './Seed';
 
 // tslint:disable-next-line: class-name
 class database {
@@ -12,6 +12,8 @@ class database {
                 reject(err);
                 return;
             }
+            // tslint:disable-next-line: no-unused-expression
+            Seed();
             // tslint:disable-next-line: no-null-keyword
             resolve(null);
         });
@@ -19,7 +21,8 @@ class database {
     }
     static disconnect() {
         console.log('Inside Disconnect method');
-        mongoose.disconnect();
+        mongoose.connection.close();
+        console.log('disocnnecyted');
     }
 }
 export default database;
