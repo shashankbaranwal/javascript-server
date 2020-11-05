@@ -3,7 +3,7 @@ import traineeController from './controller';
 import validationHandler from '../../libs/routes/validationHandler';
 import authMiddleWare from '../../libs/routes/authMiddleWare';
 import validation from './validation';
-import {permissions,user} from '../../libs/routes/Constants';
+import { permissions, user } from '../../libs/routes/Constants';
 const traineeRouter = Router();
 traineeRouter.route('/')
     .get(authMiddleWare('getUsers', 'read'), validationHandler(validation.get), traineeController.get)

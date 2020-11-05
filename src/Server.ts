@@ -3,20 +3,20 @@ import * as bodyparser from 'body-parser';
 import { notFoundRoute, errorHandler } from './libs/routes';
 import mainRouter from './router';
 class Server {
-    app
+    app;
     constructor(private config) {
-        this.app = express()
+        this.app = express();
 
     }
     bootstrap() {
-        this.setupRouts()
+        this.setupRouts();
         return this;
     }
     public setupRouts() {
         const { app } = this;
         app.use('/health-check', (req, res) => {
-            console.log("inside Second middleware");
-            res.send("I am OK");
+            console.log('inside Second middleware');
+            res.send('I am OK');
         });
         this.app.use('/api', mainRouter);
         this.app.use(notFoundRoute);
@@ -24,7 +24,7 @@ class Server {
         return this;
     }
     public initBodyParser() {
-        this.app.use(bodyparser.json({ type: 'application/**json' }))
+        this.app.use(bodyparser.json({ type: 'application/**json' }));
     }
     run() {
         const { app, config: { PORT } } = this;
@@ -33,7 +33,7 @@ class Server {
                 console.log(err);
             }
             console.log(`App is running on port ${PORT}`);
-        })
+        });
     }
 }
 export default Server;
