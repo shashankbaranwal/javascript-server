@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import hasPermission from './permission';
+import { hasPermission } from './permission';
 export default (moduleName: string, permissionType: string) => (req: Request, res: Response, next: NextFunction) => {
     try {
         const auth = 'authorization';
