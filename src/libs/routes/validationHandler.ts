@@ -2,82 +2,53 @@ import { NextFunction, Request, Response } from 'express';
 // import { isNullOrUndefined } from 'util';
 export const validationHandler = ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
     const errors = [];
-    console.log( 'Inside Middleware' );
-    console.log( req.body );
-    console.log( req.query );
-    console.log(Object.keys( req.query ).length );
-    const keys = Object.keys( config );
-    keys.forEach((key) => {
-        const obj = config[key];
-        console.log('key is' , key);
-        const values = obj.in.map( ( val ) => {
-            return req[ val ][ key ];
-        });
-
-        // Checking for In i.e Body or Query
-        console.log('body is', req[obj.in]);
-        console.log('body', Object.keys( req[obj.in] ).length );
-        if (Object.keys( req[obj.in] ).length === 0) {
-            errors.push({
-                message: `Values should be passed through ${obj.in}`,
-                status: 400
-            });
+    Object.keys(config).forEach((key) => {
+        const i = 0;
+        const keys = config[key];
+        const locations = keys.in[i];
+        let request = req[locations][key];
+        const regex = keys.regex;
+        if ((keys.required) && !(request)) {
+            const err = {
+                key: `${key}`,
+                location: `${keys.in}`,
+                errorMessage: `${keys.errorMessage || 'required'}`
+            };
+            errors.push(err);
         }
-
-        // Checking for required
-        console.log('values is' , values);
-        if (obj.required) {
-            if (isNull(values[0])) {
-                errors.push({
-                    message: `${key} is required`,
-                    status: 404
-                });
-            }
+        if ((!keys.required) && !(request)) {
+            return request = keys.default;
         }
-        if (obj.string) {
-            if ( !( typeof ( values[0] ) === 'string' ) ) {
-                errors.push({
-                    message: `${key} Should be a String`,
-                    status: 404
-                });
-            }
+        if (
+            (((keys.number) && !(Number.isInteger(Number(request)))) ||
+                ((keys.string) && !(typeof request === 'string')))
+        ) {
+            const err = {
+                key: `${key}`,
+                location: `${keys.in}`,
+                errorMessage: `${keys.errorMessage || 'incorrect Type'}`
+            };
+            errors.push(err);
         }
-        if (obj.isObject) {
-            if ( ! ( typeof ( values ) === 'object' ) ) {
-                errors.push({
-                    message: `${key} Should be an object`,
-                    status: 404
-                });
-            }
+        if ((keys.isObject) && !(typeof (request) === 'object')) {
+            const err = {
+                key: `${key}`,
+                location: `${keys.in}`,
+                errorMessage: `${keys.errorMessage || 'not an Object'}`
+            };
+            errors.push(err);
         }
-        if (obj.regex) {
-            const regex = obj.regex;
-            if (!regex.test(values[0])) {
-                errors.push({
-                    message: `${key} is not valid expression` ,
-                    status: 400,
-                });
-            }
+        if ((regex) && (!regex.test(request))) {
+            const err = {
+                key: `${key}`,
+                location: `${keys.in}`,
+                errorMessage: `${request} is not valid`
+            };
+            errors.push(err);
         }
-        if (obj.number) {
-            if (isNaN(values[0]) || values[0] === undefined) {
-                errors.push({
-                    message: `${key}  must be an number` ,
-                    status: 400,
-                });
-            }
-        }
-
     });
-    if (errors.length > 0) {
-        res.status(400).send({ errors});
+    if (errors.length !== 0) {
+        return res.status(400).send(errors);
     }
-    else {
-        next();
-    }
+    next();
 };
-
-function isNull( obj ) {
-    const a = ( obj === undefined || obj === null );
-    return a;
-  }

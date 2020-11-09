@@ -34,10 +34,8 @@ class Server {
         app.listen(PORT, (err) => {
             if (err) {
                 console.log(err);
-
             }
             console.log(`App is running on port ${PORT}`);
-
         });
     }
 }

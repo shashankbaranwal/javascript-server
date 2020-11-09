@@ -11,7 +11,6 @@ class TraineeController {
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
-
     get( req: Request, res: Response, next: NextFunction ) {
         try {
             console.log('Inside get method of Trainee Controller');
@@ -40,18 +39,12 @@ class TraineeController {
                     name: 'Trainee',
                     address: 'Noida'
                 }
-             });
-
-
+            });
         }
         catch (err) {
             console.log('inside err', err);
-
         }
-
     }
-
-
     update( req: Request, res: Response, next: NextFunction ) {
         try {
             console.log('Inside put method of Trainee Controller');
@@ -61,14 +54,12 @@ class TraineeController {
                     name: 'Trainee',
                     address: 'Noida'
                 }
-             });
+            });
 
         } catch (err) {
             console.log('inside err', err);
         }
-
     }
-
     delete( req: Request, res: Response, next: NextFunction ) {
         try {
             console.log('Inside delete method of Trainee Controller');
@@ -85,7 +76,7 @@ class TraineeController {
             console.log('inside err', err);
 
         }
-
     }
 }
+
 export default TraineeController.getInstance();
