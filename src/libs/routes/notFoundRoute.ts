@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express';
 
-export default function notFoundRoute(req: Request, res: Response, next: NextFunction) {
+export const notFoundRoute = (error) => (req: Request, res: Response, next: NextFunction) => {
     next({
-        error: "Not Found",
+        error: 'Not Found',
         code: 500
-    })
-}
+    });
+};
