@@ -1,8 +1,5 @@
 import * as mongoose from 'mongoose';
-
-
-// tslint:disable-next-line: class-name
-class database {
+class Database {
     static open(mongoURL) {
         return new Promise((resolve, reject) => {
         console.log('Inside open method');
@@ -13,13 +10,13 @@ class database {
                 return;
             }
             // tslint:disable-next-line: no-null-keyword
-            resolve(null);
+            resolve(undefined);
         });
     });
     }
     static disconnect() {
         console.log('Inside Disconnect method');
         mongoose.disconnect();
-    }
 }
-export default database;
+}
+export default Database;

@@ -1,9 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-export default (config) => (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+import { NextFunction, Request, Response } from 'express';
+// import { isNullOrUndefined } from 'util';
+export const validationHandler = ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
     const errors = [];
     Object.keys(config).forEach((key) => {
         const i = 0;
