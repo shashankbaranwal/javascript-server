@@ -13,4 +13,6 @@ export const hasPermission = (moduleName: string, role: string, permissionType: 
         return false;
     }
     return true;
+
 }
+

@@ -45,6 +45,7 @@ class Server {
         })
         .catch(err => console.log(err));
         return this;
+
     }
 }
 export default Server;

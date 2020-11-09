@@ -2,8 +2,8 @@ import { creatediamond, createequilatral } from './patterns'
 import { hasPermission, validateUsers } from './utils'
 import { users } from './constant';
 
-creatediamond(5)
-createequilatral(6)
+creatediamond(5);
+createequilatral(6);
 
 console.log(hasPermission('getUsers', 'head-trainer', 'all'));
 console.log(hasPermission('getUser', 'head-trainer', 'Delete'));

@@ -26,3 +26,4 @@ export const authMiddleWare = (moduleName: string, permissionType: string) => (r
         });
     }
 };
+

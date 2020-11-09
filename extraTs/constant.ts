@@ -7,7 +7,7 @@ export const users: IUsers[] = [
         traineeEmail: 'shashank.baranwal@successive.tech',
         reviewerEmail: 'naman.parashar@succesive.tech'
     }
-]
+];
 
 export let permissions: IPermissions = {
     'getUsers': {
