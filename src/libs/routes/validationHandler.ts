@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 // import { isNullOrUndefined } from 'util';
-
-export default ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
+export const validationHandler = ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
     const errors = [];
     console.log( 'Inside Middleware' );
     console.log( req.body );

@@ -1,8 +1,8 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import mainRouter from './router';
-import errorHandler from './libs/routes/errorHandler';
-import notFoundRoute from './libs/routes/notFoundRoute';
+import { errorHandler } from './libs/routes/errorHandler';
+import { notFoundRoute } from './libs/routes/notFoundRoute';
 
 
 class Server {

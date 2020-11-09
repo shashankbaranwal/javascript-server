@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-export default function errorHandler(err, req: Request, res: Response, next: NextFunction) {
+export const errorHandler = (err) => (req: Request, res: Response, next: NextFunction ) => {
+    const { error, message, code} = err;
     res.json({
-        error: err.error,
-        status: err.code,
-        message: err.message || 'Error',
+        error,
+        status: code,
+        message: message || 'Error',
         timestamp: new Date()
     });
-}
-
+};

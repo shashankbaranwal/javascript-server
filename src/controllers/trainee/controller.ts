@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-// tslint:disable-next-line: class-name
-class traineeController {
-    static instance: traineeController;
+
+class TraineeController {
+    static instance: TraineeController;
 
     static getInstance() {
-        if (traineeController.instance) {
-            return traineeController.instance;
+        if (TraineeController.instance) {
+            return TraineeController.instance;
         }
 
-        traineeController.instance = new traineeController();
-        return traineeController.instance;
+        TraineeController.instance = new TraineeController();
+        return TraineeController.instance;
     }
 
     get( req: Request, res: Response, next: NextFunction ) {
@@ -19,19 +19,16 @@ class traineeController {
                 message: 'Trainees fetched successfully',
                 data: [
                     {
-                    name: 'Trainee1',
+                    name: 'Trainee',
                     address: 'Noida'
                 }
             ]
 
             });
-
         }
         catch (err) {
             console.log('inside err', err);
-
         }
-
     }
 
     create( req: Request, res: Response, next: NextFunction ) {
@@ -40,7 +37,7 @@ class traineeController {
             res.send({
                 message: 'Trainees created successfully',
                 data: {
-                    name: 'Trainee1',
+                    name: 'Trainee',
                     address: 'Noida'
                 }
              });
@@ -61,7 +58,7 @@ class traineeController {
             res.send({
                 message: 'Trainees updated successfully',
                 data: {
-                    name: 'Trainee1',
+                    name: 'Trainee',
                     address: 'Noida'
                 }
              });
@@ -72,14 +69,14 @@ class traineeController {
 
     }
 
-    Delete( req: Request, res: Response, next: NextFunction ) {
+    delete( req: Request, res: Response, next: NextFunction ) {
         try {
             console.log('Inside delete method of Trainee Controller');
             res.send({
 
                 message: 'Trainees Deleted successfully',
                 data: {
-                    name: 'Trainee1',
+                    name: 'Trainee',
                     address: 'Noida'
                 }
              });
@@ -91,5 +88,4 @@ class traineeController {
 
     }
 }
-export default traineeController.getInstance();
-
+export default TraineeController.getInstance();
