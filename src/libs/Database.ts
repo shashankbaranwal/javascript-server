@@ -1,6 +1,5 @@
 import * as mongoose from 'mongoose';
 import Seed from './Seed';
-
 class Database {
     static open(mongoURL) {
         return new Promise((resolve, reject) => {
