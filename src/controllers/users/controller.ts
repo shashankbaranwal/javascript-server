@@ -1,16 +1,14 @@
 import { Response, Request, NextFunction } from 'express';
 
-// tslint:disable-next-line: class-name
-class userController {
-    static instance: userController;
+class UserController {
+    static instance: UserController;
 
     static getInstance() {
-        if (userController.instance) {
-            return userController.instance;
+        if (UserController.instance) {
+            return UserController.instance;
         }
-
-        userController.instance = new userController();
-        return userController.instance;
+        UserController.instance = new UserController();
+        return UserController.instance;
     }
     get(_req: Request, res: Response, _next: NextFunction) {
         try {
@@ -19,7 +17,7 @@ class userController {
                 message: 'User fetched successfully',
                 data: [
                     {
-                        name: 'User1',
+                        name: 'User',
                         address: 'Noida'
                     }
                 ]
@@ -35,7 +33,7 @@ class userController {
             res.send({
                 message: 'Users created successfully',
                 data: {
-                    name: 'User1',
+                    name: 'User',
                     address: 'Noida'
                 }
             });
@@ -50,7 +48,7 @@ class userController {
             res.send({
                 message: 'User updated successfully',
                 data: {
-                    name: 'User1',
+                    name: 'User',
                     address: 'Noida'
                 }
             });
@@ -59,14 +57,14 @@ class userController {
             console.log('inside err', err);
         }
     }
-    Delete(_req: Request, res: Response, _next: NextFunction) {
+    delete(_req: Request, res: Response, _next: NextFunction) {
         try {
             console.log('Inside delete method of User Controller');
             res.send({
                 message: 'User deleted successfully',
                 data: [
                     {
-                        name: 'User1',
+                        name: 'User',
                         address: 'Noida'
                     }
                 ]
@@ -77,4 +75,4 @@ class userController {
         }
     }
 }
-export default userController.getInstance();
+export default UserController.getInstance();

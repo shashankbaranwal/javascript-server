@@ -1,10 +1,12 @@
-import { Router } from 'express';
-import userController from './controllers';
-import validationHandler from '../../libs/routes/validationHandler';
-import authMiddleWare from '../../libs/routes/authMiddleWare';
-import validation from './validation';
-const userRouter = Router();
-userRouter.route('/')
-    .post(authMiddleWare('getUsers', 'write'), validationHandler(validation.create), userController.create);
+import * as express from 'express';
+import UserController from './controller';
 
-export default userRouter;
+const UserRouter = express.Router();
+
+UserRouter.route('/')
+    .get( UserController.get)
+    .post( UserController.create)
+    .put( UserController.update)
+    .delete( UserController.delete);
+
+export default UserRouter;

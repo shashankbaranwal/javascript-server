@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import traineeController from './controller';
-import validationHandler from '../../libs/routes/validationHandler';
-import authMiddleWare from '../../libs/routes/authMiddleWare';
+import { validationHandler } from '../../libs/routes/validationHandler';
+import { authMiddleWare } from '../../libs/routes/authMiddleWare';
 import validation from './validation';
 const traineeRouter = Router();
 traineeRouter.route('/')

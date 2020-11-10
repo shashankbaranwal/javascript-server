@@ -1,8 +1,7 @@
 import * as mongoose from 'mongoose';
 import Seed from './Seed';
 
-// tslint:disable-next-line: class-name
-class database {
+class Database {
     static open(mongoURL) {
         return new Promise((resolve, reject) => {
         console.log('Inside open method');
@@ -12,17 +11,18 @@ class database {
                 reject(err);
                 return;
             }
-            // tslint:disable-next-line: no-unused-expression
             Seed();
-            // tslint:disable-next-line: no-null-keyword
-            resolve(null);
+            resolve();
         });
     });
     }
     static disconnect() {
-        console.log('Inside Disconnect method');
-        mongoose.connection.close();
-        console.log('disocnnecyted');
+        mongoose.disconnect(err => {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Database Disconnected');
+        });
     }
 }
-export default database;
+export default Database;
