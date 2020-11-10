@@ -1,10 +1,9 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
+import Database from './libs/Database';
 import mainRouter from './router';
 import { errorHandler } from './libs/routes/errorHandler';
 import { notFoundRoute } from './libs/routes/notFoundRoute';
-
-
 class Server {
     app;
     constructor(private config) {
@@ -31,12 +30,22 @@ class Server {
     }
     run() {
         const { app, config: { PORT } } = this;
-        app.listen(PORT, (err) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(`App is running on port ${PORT}`);
-        });
+        Database.open('mongodb://localhost:27017/express-training')
+        .then((res) => {
+            console.log('Succesfully connected to Mongo');
+            app.listen(PORT, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(`App is running on port ${PORT}`);
+                    Database.disconnect();
+                }
+            });
+        })
+        .catch(err => console.log(err));
+        return this;
+
     }
 }
 export default Server;
