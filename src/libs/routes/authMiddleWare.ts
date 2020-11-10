@@ -1,11 +1,12 @@
 import * as jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-import  { hasPermission } from './permission';
+import { hasPermission } from './permission';
 
-export const authMiddleWare = (moduleName: string, permissionType: string) => (req: Request, res: Response, next: NextFunction) => {
+import { Response, NextFunction } from 'express';
+
+export const authMiddleWare = (moduleName: string, permissionType: string) => async (req: Request, res: Response, next: NextFunction) => {
     try {
         const auth = 'authorization';
-        const token = req.headers[auth];
+        const token = req.headers[' authorization '];
         const decodeUser = jwt.verify(token, 'qwertyuiopasdfghjklzxcvbnm123456');
         console.log(decodeUser);
         console.log(moduleName, decodeUser.role, permissionType);
