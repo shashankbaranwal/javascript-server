@@ -1,11 +1,4 @@
-
-export default function validateEmail(email){
-    const regex = /\w+.\w+@successive.tech$/i;
-    if(regex.test(email))
-    {
-        return true;
-    }
-    else{
-        return false;
-    }
+export default function validateEmail(email) {
+    const regx = /^([a-zA-z0-9/.-]+)@(successive).(tech)$/;
+     return regx.test( email );
 }
