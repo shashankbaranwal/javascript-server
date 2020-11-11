@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import UserRepository from '../../repositories/user/UserRepository';
+
 class TraineeController {
     static instance: TraineeController;
 
@@ -9,17 +11,17 @@ class TraineeController {
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
-    get( req: Request, res: Response, next: NextFunction ) {
+    get(_req: Request, res: Response, _next: NextFunction) {
         try {
             console.log('Inside get method of Trainee Controller');
             res.send({
                 message: 'Trainees fetched successfully',
                 data: [
                     {
-                    name: 'Trainee',
-                    address: 'Noida'
-                }
-            ]
+                        name: 'Trainee',
+                        address: 'Noida'
+                    }
+                ]
 
             });
         }
@@ -28,7 +30,7 @@ class TraineeController {
         }
     }
 
-    create( req: Request, res: Response, next: NextFunction ) {
+    create(_req: Request, res: Response, _next: NextFunction) {
         try {
             console.log('Inside post method of Trainee Controller');
             res.send({
@@ -43,7 +45,7 @@ class TraineeController {
             console.log('inside err', err);
         }
     }
-    update( req: Request, res: Response, next: NextFunction ) {
+    update(_req: Request, res: Response, _next: NextFunction) {
         try {
             console.log('Inside put method of Trainee Controller');
             res.send({
@@ -58,7 +60,7 @@ class TraineeController {
             console.log('inside err', err);
         }
     }
-    delete( req: Request, res: Response, next: NextFunction ) {
+    delete(_req: Request, res: Response, _next: NextFunction) {
         try {
             console.log('Inside delete method of Trainee Controller');
             res.send({
@@ -67,7 +69,7 @@ class TraineeController {
                     name: 'Trainee',
                     address: 'Noida'
                 }
-             });
+            });
 
         } catch (err) {
             console.log('inside err', err);

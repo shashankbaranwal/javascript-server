@@ -5,19 +5,26 @@ import { Response, NextFunction } from 'express';
 
 export const authMiddleWare = (moduleName: string, permissionType: string) => async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log('the config is ', moduleName, permissionType);
+        console.log('Header is : ', req.headers);
         const auth = 'authorization';
         const token = req.headers[' authorization '];
-        const decodeUser = jwt.verify(token, 'qwertyuiopasdfghjklzxcvbnm123456');
-        console.log(decodeUser);
+        const decodeUser = jwt.verify(token, 'config.secret_key');
+        console.log('User', decodeUser);
         console.log(moduleName, decodeUser.role, permissionType);
-        if (hasPermission(moduleName, decodeUser.role, permissionType)) {
-            next();
+        if ( decodeUser.role ) {
+            if (hasPermission(moduleName, decodeUser.role, permissionType)) {
+                next();
+            }
+            else {
+                next({
+                    error: 'Unauthorized Access',
+                    message: 403
+                });
+            }
         }
         else {
-            next({
-                error: 'Unauthorized Access',
-                message: 403
-            });
+            next( { error: 'Token does not exist '});
         }
     }
     catch (err) {

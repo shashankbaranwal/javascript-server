@@ -2,6 +2,10 @@ import { Response, Request, NextFunction } from 'express';
 import { userModel } from '../../repositories/user/UserModel';
 import * as jwt from 'jsonwebtoken';
 import IRequest from '../../IRequest';
+import { config } from '../../config';
+import UserRepository from '../../repositories/user/UserRepository';
+import { users } from '../../libs/routes/constant';
+
 class UserController {
     static instance: UserController;
 
@@ -29,55 +33,110 @@ class UserController {
             console.log('Inside err', err);
         }
     }
-    create(req: Request, res: Response, next: NextFunction) {
+    createUser(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log('Inside post method of Trainee');
+            console.log('inside createUser method');
+            const Userrepository: UserRepository = new UserRepository();
+            Userrepository.create(req.body);
             res.send({
-                message: 'User created succefully',
-                data: [{
-                    name: 'user1',
-
-                },
-                {
-                    name: 'user2',
-                }]
+                message: 'Trainee created succesfully'
             });
-        } catch (err) {
-            console.log('Inside err', err);
+        }
+        catch (err) {
+            return next({
+                error: 'ResponseBadRequest',
+                message: err,
+
+            });
         }
     }
-    update(_req: Request, res: Response, _next: NextFunction) {
+    findOne(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log('Inside put method of Trainee');
-            res.send({
-                message: 'User updated succefully',
-                data: [{
-                    name: 'user1',
-
-                },
-                {
-                    name: 'user2',
-                }]
+            console.log('inside findOne method');
+            const Userrepository: UserRepository = new UserRepository();
+            Userrepository.findOne({email: req.body.email}, (err, data) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(data);
+                    res.status(200).send({
+                        message: 'Trainees find successfully',
+                        data: [
+                            {
+                                database: data
+                            }
+                        ],
+                        status: 'Successfully Response'
+                    });
+                }
             });
-        } catch (err) {
-            console.log('Inside err', err);
+        }
+        catch (err) {
+            return next({
+                error: 'ResponseBadRequest',
+                message: err,
+
+            });
         }
     }
-    delete(_req: Request, res: Response, _next: NextFunction) {
+    delete(req: Request, res: Response, next: NextFunction ) {
         try {
-            console.log('Inside post method of Trainee');
-            res.send({
-                message: 'User deleted succefully',
-                data: [{
-                    name: 'user1',
-
-                },
-                {
-                    name: 'user2',
-                }]
+            const userRepository = new UserRepository();
+            userRepository.delete(req.params.id);
+            res.status(200).send({
+                message: 'trainee deleted successfully',
+                data: [
+                    {
+                        Id: req.params.id
+                    }
+                ],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
+        }
+    }
+    update(req: Request, res: Response, next: NextFunction ) {
+        try {
+            const userRepository = new UserRepository();
+            userRepository.userUpdate(req.body);
+            res.status(200).send({
+                message: 'User updated successfully',
+                data: [req.body]
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    getAll(req: Request, res: Response, next: NextFunction) {
+        try {
+            console.log('inside getall method');
+            const Userrepository: UserRepository = new UserRepository();
+            Userrepository.getAll({}, (err, data) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(data);
+                    res.status(200).send({
+                        message: 'User fetched successfully',
+                        data: [
+                            {
+                                database: data
+                            }
+                        ],
+                        status: 'Successfully Response'
+                    });
+                }
+            });
+        }
+        catch (err) {
+            return next({
+                error: 'ResponseBadRequest',
+                message: err,
+
+            });
         }
     }
     login(req: IRequest, res: Response, next: NextFunction) {
@@ -89,7 +148,7 @@ class UserController {
                         console.log('result is', result.password);
                         const token = jwt.sign({
                             result
-                        }, 'qwertyuiopasdfghjklzxcvbnm123456');
+                        }, config.secret_key);
                         console.log(token);
                         res.send({
                             data: token,

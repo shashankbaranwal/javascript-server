@@ -1,23 +1,31 @@
 import * as express from 'express';
 import UserController from './controller';
 import { authMiddleWare } from '../../libs/routes/authMiddleWare';
-import { permissions } from '../../libs/routes/constant';
 import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
-import { Router } from 'express';
-
+// import { Router } from 'express';
+// import { permissions } from '../../libs/routes/constant';
 const UserRouter = express.Router();
 
-UserRouter.route('/')
-    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.get)
-    .post(authMiddleWare('getUsers', 'write'), validationHandler(config.get), UserController.create)
-    .put(authMiddleWare('getUsers', 'all'), validationHandler(config.get), UserController.update)
-    .delete(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.delete);
-
 UserRouter.route('/me')
-    .get(authMiddleWare('getUsers', 'all'), UserController.me);
+    .get(authMiddleWare('getUsers', 'read'), UserController.me);
 
 UserRouter.route('/login')
-    .post(validationHandler(config.login), UserController.login);
+    .post(UserController.login, validationHandler(config.create), UserController.me);
+
+UserRouter.route('/:id')
+    .delete(validationHandler(config.delete), UserController.delete);
+
+UserRouter.route('/getall')
+    .get(UserController.getAll);
+
+UserRouter.route('/findone')
+    .get(UserController.findOne);
+
+UserRouter.route('/create')
+    .post(UserController.createUser);
+
+UserRouter.route('/update')
+    .put(UserController.update);
 
 export default UserRouter;

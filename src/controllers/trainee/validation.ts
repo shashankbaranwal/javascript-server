@@ -32,7 +32,7 @@ const config = {
             errorMessage: 'Name is required'
         }
     },
-    Delete: {
+    delete: {
         id: {
             required: true,
             errorMessage: 'Id is required',
