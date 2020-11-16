@@ -1,38 +1,63 @@
 import * as jwt from 'jsonwebtoken';
 import { hasPermission } from './permission';
-
+import { config } from '../../config';
 import { Response, NextFunction } from 'express';
+import UserRepository from '../../repositories/user/UserRepository';
 
-export const authMiddleWare = (moduleName: string, permissionType: string) => async (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleWare = (module, permission) => async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('the config is ', moduleName, permissionType);
-        console.log('Header is : ', req.headers);
-        const auth = 'authorization';
-        const token = req.headers[' authorization '];
-        const decodeUser = jwt.verify(token, 'config.secret_key');
-        console.log('User', decodeUser);
-        console.log(moduleName, decodeUser.role, permissionType);
-        if ( decodeUser.role ) {
-            if (hasPermission(moduleName, decodeUser.role, permissionType)) {
-                next();
-            }
-            else {
-                next({
-                    error: 'Unauthorized Access',
-                    message: 403
-                });
-            }
+        let decodeUser: any;
+        const authorization = 'authorization';
+        const secretKey = config.secret_key;
+        const token = req.headers[authorization];
+        if (!token) {
+            next ({
+                message: 'Token not found',
+                error: 'Authentication Failed',
+                status: 403
+            });
         }
-        else {
-            next( { error: 'Token does not exist '});
+        decodeUser = jwt.verify(token, secretKey);
+        const { email, password } = decodeUser;
+        if (!email || !password) {
+            next({
+                message: 'Email or Password not in token',
+                error: 'Authentication failed',
+                status: 403
+            });
         }
+        const userRepository = new UserRepository();
+        const data = await userRepository.findOne({email, password});
+        if (!data) {
+            next({
+                message: 'User is empty',
+                error: 'Authetication failed',
+                status: 403
+            });
+        }
+        if (!data.role) {
+            next({
+                message: 'role not found',
+                error: 'Authentication Failed',
+                status: 403
+            });
+            return;
+        }
+        if (!hasPermission(module, data.role, permission)) {
+            return next({
+                message: `${data.role} does not have ${permission} permission in ${module}`,
+                error: 'unauthorized',
+                status: 403
+            });
+        }
+        res.locals.userData = data;
+    next();
     }
     catch (err) {
         next({
-            error: err,
-            message: 'Unauthenticate Access',
-            code: 404
+            message: 'User is Invalid',
+            error: 'Uthentication Failed',
+            status: 403
         });
     }
 };
-

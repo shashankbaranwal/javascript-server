@@ -8,24 +8,18 @@ import config from './validation';
 const UserRouter = express.Router();
 
 UserRouter.route('/me')
-    .get(authMiddleWare('getUsers', 'read'), UserController.me);
+    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.profile);
 
 UserRouter.route('/login')
-    .post(UserController.login, validationHandler(config.create), UserController.me);
+    .post(validationHandler(config.create), UserController.login);
+
+UserRouter.route('/')
+    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.get)
+    .post(authMiddleWare('getUsers', 'write'), validationHandler(config.create), UserController.create)
+    .put(authMiddleWare('getUsers', 'all'), validationHandler(config.update), UserController.update)
+    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
 
 UserRouter.route('/:id')
-    .delete(validationHandler(config.delete), UserController.delete);
-
-UserRouter.route('/getall')
-    .get(UserController.getAll);
-
-UserRouter.route('/findone')
-    .get(UserController.findOne);
-
-UserRouter.route('/create')
-    .post(UserController.createUser);
-
-UserRouter.route('/update')
-    .put(UserController.update);
+    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
 
 export default UserRouter;

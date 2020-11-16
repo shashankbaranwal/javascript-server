@@ -4,9 +4,12 @@ import * as jwt from 'jsonwebtoken';
 import IRequest from '../../IRequest';
 import { config } from '../../config';
 import UserRepository from '../../repositories/user/UserRepository';
-import { users } from '../../libs/routes/constant';
+import { payLoad } from '../../libs/routes/constant';
 
 class UserController {
+    create(arg0: (req: Request, res: any, next: any) => Promise<void>, arg1: (req: any, res: any, next: any) => any, create: any) {
+        throw new Error('Method not implemented.');
+    }
     static instance: UserController;
 
     static getInstance() {
@@ -16,6 +19,49 @@ class UserController {
         UserController.instance = new UserController();
         return UserController.instance;
     }
+    profile(req: Request, res: Response, next: NextFunction ) {
+        try {
+            res.status(200).send({
+                message: 'Profile fetched successfully',
+                data: [res.locals.userData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    login(req: Request, res: Response, next: NextFunction ) {
+        try {
+            const userRepositories = new UserRepository();
+            const { email, password } = req.body;
+            Object.assign(payLoad , {email, password});
+            userRepositories.findOne({email, password})
+                .then((data) => {
+                    if (data) {
+                        const secret = config.secret_key;
+                        const tokenGenerated = jwt.sign(payLoad, secret);
+                        res.status(200).send({
+                            message: 'Logged in successfully',
+                            data: [
+                                {
+                                    token: tokenGenerated
+                                }
+                            ],
+                            status: 'success',
+                        });
+                    }
+                })
+                .catch((err) => {
+                    next ({
+                        message: 'invalid email or password',
+                        error: 'Authentication Failed',
+                        status: 403
+                    });
+                });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
     get(_req: Request, res: Response, _next: NextFunction) {
         try {
             console.log('Inside get method of User');
@@ -24,10 +70,7 @@ class UserController {
                 data: [{
                     name: 'user1',
 
-                },
-                {
-                    name: 'user2',
-                }]
+                }],
             });
         } catch (err) {
             console.log('Inside err', err);
@@ -39,7 +82,7 @@ class UserController {
             const Userrepository: UserRepository = new UserRepository();
             Userrepository.create(req.body);
             res.send({
-                message: 'Trainee created succesfully'
+                message: 'User created succesfully'
             });
         }
         catch (err) {
@@ -50,60 +93,32 @@ class UserController {
             });
         }
     }
-    findOne(req: Request, res: Response, next: NextFunction) {
+    update(req: Request, res: Response, next: NextFunction ) {
         try {
-            console.log('inside findOne method');
-            const Userrepository: UserRepository = new UserRepository();
-            Userrepository.findOne({email: req.body.email}, (err, data) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log(data);
-                    res.status(200).send({
-                        message: 'Trainees find successfully',
-                        data: [
-                            {
-                                database: data
-                            }
-                        ],
-                        status: 'Successfully Response'
-                    });
-                }
-            });
-        }
-        catch (err) {
-            return next({
-                error: 'ResponseBadRequest',
-                message: err,
-
-            });
-        }
-    }
-    delete(req: Request, res: Response, next: NextFunction ) {
-        try {
-            const userRepository = new UserRepository();
-            userRepository.delete(req.params.id);
             res.status(200).send({
-                message: 'trainee deleted successfully',
+                message: 'User updated successfully',
                 data: [
                     {
-                        Id: req.params.id
+                        name: 'User3',
+                        address: 'Noida',
                     }
-                ],
-                status: 'success',
+                ]
             });
         } catch (err) {
             console.log('error is ', err);
         }
     }
-    update(req: Request, res: Response, next: NextFunction ) {
+    delete(req: Request, res: Response, next: NextFunction ) {
         try {
-            const userRepository = new UserRepository();
-            userRepository.userUpdate(req.body);
             res.status(200).send({
-                message: 'User updated successfully',
-                data: [req.body]
+                message: 'User deleted successfully',
+                data: [
+                    {
+                        name: 'User4',
+                        address: 'Faridabad',
+                    }
+                ],
+                status: 'success',
             });
         } catch (err) {
             console.log('error is ', err);
@@ -137,42 +152,6 @@ class UserController {
                 message: err,
 
             });
-        }
-    }
-    login(req: IRequest, res: Response, next: NextFunction) {
-        try {
-            const { email, password } = req.body;
-            userModel.findOne({ email: req.body.email }, (err, result) => {
-                if (result) {
-                    if (password === result.password) {
-                        console.log('result is', result.password);
-                        const token = jwt.sign({
-                            result
-                        }, config.secret_key);
-                        console.log(token);
-                        res.send({
-                            data: token,
-                            message: 'Login Permited',
-                            status: 200
-                        });
-                    }
-                    else {
-                        res.send({
-                            message: 'Password Doesnt match',
-                            status: 400
-                        });
-                    }
-                }
-                else {
-                    res.send({
-                        message: 'Email is not Registered',
-                        status: 404
-                    });
-                }
-            });
-        }
-        catch (err) {
-            res.send(err);
         }
     }
     me(req: IRequest, res: Response, next: NextFunction) {

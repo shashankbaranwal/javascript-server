@@ -2,8 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import UserRepository from '../../repositories/user/UserRepository';
 
 class TraineeController {
+    private userRepository;
+    constructor() {
+        this.userRepository = new UserRepository();
+    }
     static instance: TraineeController;
-
     static getInstance() {
         if (TraineeController.instance) {
             return TraineeController.instance;
@@ -11,68 +14,56 @@ class TraineeController {
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
-    get(_req: Request, res: Response, _next: NextFunction) {
+    public get = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            console.log('Inside get method of Trainee Controller');
-            res.send({
-                message: 'Trainees fetched successfully',
+            const extractedData = await this.userRepository.findAll(req.body, {}, {});
+            res.status(200).send({
+                message: 'trainee fetched successfully',
+                data: [extractedData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    public create = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            this.userRepository.userCreate(req.body);
+            res.status(200).send({
+                message: 'trainee created successfully',
+                data: [req.body],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    public update = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            this.userRepository.userUpdate(req.body);
+            res.status(200).send({
+                message: 'trainee updated successfully',
+                data: [req.body]
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    public delete = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = req.params.id;
+            this.userRepository.delete(id);
+            res.status(200).send({
+                message: 'trainee deleted successfully',
                 data: [
                     {
-                        name: 'Trainee',
-                        address: 'Noida'
+                        Id: req.params.id
                     }
-                ]
-
+                ],
+                status: 'success',
             });
-        }
-        catch (err) {
-            console.log('inside err', err);
-        }
-    }
-
-    create(_req: Request, res: Response, _next: NextFunction) {
-        try {
-            console.log('Inside post method of Trainee Controller');
-            res.send({
-                message: 'Trainees created successfully',
-                data: {
-                    name: 'Trainee',
-                    address: 'Noida'
-                }
-            });
-        }
-        catch (err) {
-            console.log('inside err', err);
-        }
-    }
-    update(_req: Request, res: Response, _next: NextFunction) {
-        try {
-            console.log('Inside put method of Trainee Controller');
-            res.send({
-                message: 'Trainees updated successfully',
-                data: {
-                    name: 'Trainee',
-                    address: 'Noida'
-                }
-            });
-
         } catch (err) {
-            console.log('inside err', err);
-        }
-    }
-    delete(_req: Request, res: Response, _next: NextFunction) {
-        try {
-            console.log('Inside delete method of Trainee Controller');
-            res.send({
-                message: 'Trainees Deleted successfully',
-                data: {
-                    name: 'Trainee',
-                    address: 'Noida'
-                }
-            });
-
-        } catch (err) {
-            console.log('inside err', err);
+            console.log('error is ', err);
         }
     }
 }

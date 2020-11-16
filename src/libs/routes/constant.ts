@@ -23,3 +23,13 @@ export let permissions = {
         Delete: []
     }
 };
+
+export const payLoad = {
+    'iss': 'Successive Technologies',
+    'iat': 1604858574,
+    'exp': 1636394601,
+    'aud': 'www.successive.in',
+    'sub': 'Learn and Implement',
+    'email': '',
+    'password': ''
+};
