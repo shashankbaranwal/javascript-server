@@ -42,6 +42,12 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.10.13",
         "test": "^0.6.0"
+    },
+    "husky": {
+        "hooks": {
+          "pre-commit": "npm test",
+          "pre-push": "npm test",
+          "...": "..."
+        }
     }
-    
 }

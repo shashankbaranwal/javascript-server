@@ -5,9 +5,11 @@ import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
 const traineeRouter = Router();
 traineeRouter.route('/')
-    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), TraineeController.get)
-    .post(authMiddleWare('getUsers', 'write'), validationHandler(config.create), TraineeController.create)
-    .put(authMiddleWare('getUsers', 'all'), validationHandler(config.update), TraineeController.update)
-    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), TraineeController.delete);
+    .get(TraineeController.get)
+    .post(TraineeController.create)
+    .put(TraineeController.update);
+
+traineeRouter.route('/:id')
+    .delete(validationHandler(config.delete), TraineeController.delete);
 
 export default traineeRouter;

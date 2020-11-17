@@ -2,33 +2,33 @@ import * as mongoose from 'mongoose';
 import { userModel } from './UserModel';
 import IUserModel from './IUserModel';
 import VersionableRepository from '../versionable/VersionableRepository';
-export default class UserRepositories extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
-    getAll(arg0: {}, arg1: (err: any, data: any) => void) {
-        throw new Error('Method not implemented.');
-    }
+export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
 
-    public static generateObjectId() {
-        return String(mongoose.Types.ObjectId());
-    }
     constructor() {
         super(userModel);
     }
-    public static readOne(query): mongoose.DocumentQuery<IUserModel, IUserModel, {}> {
-        return userModel.findOne(query).lean();
+
+    public createUser(data, creator) {
+        return super.create(data, creator);
     }
 
-    public create(data: any): Promise<IUserModel> {
-        console.log('User Data:', data);
-        const id = UserRepositories.generateObjectId();
-        const model = new userModel({
-            _id: id,
-            ...data,
-            originalId: id,
-        });
-        return model.save();
+    public updateUser(id, data, updator) {
+        return super.update(id, data, updator);
     }
 
-    public count() {
-        return userModel.countDocuments();
+    public getUser(data) {
+        return super.getUser(data);
+    }
+
+    public deleteData(id, remover) {
+        return super.delete(id, remover);
+    }
+
+    public findone(data) {
+        return super.findOne(data);
+    }
+
+    public countData() {
+        return super.count();
     }
 }
