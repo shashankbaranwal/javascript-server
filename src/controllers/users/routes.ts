@@ -8,13 +8,14 @@ const UserRouter = express.Router();
 
 UserRouter.route('/')
     // .get( UserController.get)
-    .post(authMiddleWare(permissions.getUsers, 'read'), UserController.create)
-    .put(authMiddleWare(permissions.getUsers, 'read'), UserController.update);
+    .post(authMiddleWare(permissions.getUsers, 'read'), validationHandler(config.create), UserController.create)
+    .put(authMiddleWare(permissions.getUsers, 'read'), validationHandler(config.update), UserController.update);
 
-UserRouter.route('/:id').delete(authMiddleWare(permissions.getUsers, 'read'), UserController.remove);
+UserRouter.route('/:id')
+    .delete(authMiddleWare('getUsers', 'read'), validationHandler(config.delete), UserController.delete);
 
 UserRouter.route('/me')
-    .get(authMiddleWare(permissions.getUsers, 'all'), UserController.me);
+    .get(authMiddleWare('getUsers', 'all'), UserController.me);
 
 UserRouter.route('/login')
     .post(validationHandler(config.login), UserController.login);

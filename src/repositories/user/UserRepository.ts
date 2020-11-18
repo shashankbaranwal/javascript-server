@@ -3,6 +3,9 @@ import { userModel } from './UserModel';
 import IUserModel from './IUserModel';
 import VersionableRepository from '../versionable/VersionableRepository';
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
+    static findOne(arg0: { email: any; password: any; }) {
+        throw new Error('Method not implemented.');
+    }
 
     constructor() {
         super(userModel);
