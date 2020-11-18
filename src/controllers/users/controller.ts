@@ -7,12 +7,6 @@ import UserRepository from '../../repositories/user/UserRepository';
 import { payLoad } from '../../libs/routes/constant';
 
 class UserController {
-    me(arg0: (req: Request, res: any, next: any) => Promise<any>, me: any) {
-        throw new Error('Method not implemented.');
-    }
-    remove(arg0: (req: Request, res: any, next: any) => Promise<any>, remove: any) {
-        throw new Error('Method not implemented.');
-    }
     static instance: UserController;
 
     static getInstance() {
