@@ -5,19 +5,19 @@ export default () => {
     userRepository.count()
         .then(res => {
             if (res === 0) {
-                console.log('Data seeding in progress');
-                userRepository.createUser({
-                    name: 'head-trainer',
-                    email: 'headtrainer@successivetech',
+                console.log('Inserting Data');
+                userRepository.createV({
+                    name: 'Head-Trainer',
+                    email: 'head.trainer@successive.tech',
                     role: 'head-trainer',
-                    password: 'training@123'
-                }, undefined);
-                userRepository.createUser({
-                    name: 'trainer',
-                    email: 'trainer@successivetech',
+                    password: 'headhead'
+                });
+                userRepository.createV({
+                    name: 'Trainer',
+                    email: 'trainer@successive.tech',
                     role: 'trainer',
-                    password: 'training@123'
-                }, undefined);
+                    password: 'trainertrainer'
+                });
             }
         })
         .catch(err => console.log(err));

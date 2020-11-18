@@ -4,11 +4,12 @@ import { config } from '../../config';
 import { Response, NextFunction } from 'express';
 import UserRepository from '../../repositories/user/UserRepository';
 
+
 export const authMiddleWare = (module, permission) => async (req: Request, res: Response, next: NextFunction) => {
     try {
         let decodeUser: any;
         const authorization = 'authorization';
-        const secretKey = config.secret_key;
+        const secret = config.secret_key;
         const token = req.headers[authorization];
         if (!token) {
             next ({
@@ -17,7 +18,7 @@ export const authMiddleWare = (module, permission) => async (req: Request, res: 
                 status: 403
             });
         }
-        decodeUser = jwt.verify(token, secretKey);
+        decodeUser = jwt.verify(token, 'secret_key');
         const { email, password } = decodeUser;
         if (!email || !password) {
             next({
