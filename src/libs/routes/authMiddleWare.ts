@@ -18,7 +18,7 @@ export const authMiddleWare = (module, permission) => async (req: Request, res: 
                 status: 403
             });
         }
-        decodeUser = jwt.verify(token, secretKey);
+        decodeUser = jwt.verify(token, secret_key);
         const { email, password } = decodeUser;
         if (!email || !password) {
             next({
