@@ -6,13 +6,13 @@ export default () => {
         .then(res => {
             if (res === 0) {
                 console.log('Inserting Data');
-                userRepository.createV({
+                userRepository.create({
                     name: 'Head-Trainer',
                     email: 'head.trainer@successive.tech',
                     role: 'head-trainer',
                     password: 'headhead'
                 });
-                userRepository.createV({
+                userRepository.create({
                     name: 'Trainer',
                     email: 'trainer@successive.tech',
                     role: 'trainer',

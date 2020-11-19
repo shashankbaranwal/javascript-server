@@ -1,7 +1,6 @@
 import * as express from 'express';
 import UserController from './controller';
 import { authMiddleWare } from '../../libs/routes/authMiddleWare';
-import { permissions } from '../../libs/routes/constant';
 import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
 const UserRouter = express.Router();

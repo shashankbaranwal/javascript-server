@@ -9,7 +9,7 @@ export const authMiddleWare = (module, permission) => async (req: Request, res: 
     try {
         let decodeUser: any;
         const authorization = 'authorization';
-        const secret = config.secret_key;
+        const secretKey = config.secret_key;
         const token = req.headers[authorization];
         if (!token) {
             next ({
@@ -18,7 +18,7 @@ export const authMiddleWare = (module, permission) => async (req: Request, res: 
                 status: 403
             });
         }
-        decodeUser = jwt.verify(token, 'secret_key');
+        decodeUser = jwt.verify(token, secretKey);
         const { email, password } = decodeUser;
         if (!email || !password) {
             next({

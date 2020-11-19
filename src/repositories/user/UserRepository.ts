@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { userModel } from './UserModel';
 import IUserModel from './IUserModel';
 import VersionableRepository from '../versionable/VersionableRepository';
-export default class UserRepositories extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
+export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
 
     public static generateObjectId() {
         return String(mongoose.Types.ObjectId());
@@ -14,9 +14,9 @@ export default class UserRepositories extends VersionableRepository<IUserModel, 
         return userModel.findOne(query).lean();
     }
 
-    public createV(data: any): Promise<IUserModel> {
+    public create(data: any): Promise<IUserModel> {
         console.log('User Data:', data);
-        const id = UserRepositories.generateObjectId();
+        const id = UserRepository.generateObjectId();
         const model = new userModel({
             _id: id,
             ...data,

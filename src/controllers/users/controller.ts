@@ -1,7 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
-import { userModel } from '../../repositories/user/UserModel';
 import * as jwt from 'jsonwebtoken';
-import IRequest from '../../IRequest';
 import { config } from '../../config';
 import UserRepository from '../../repositories/user/UserRepository';
 import { payLoad } from '../../libs/routes/constant';
@@ -31,10 +29,10 @@ class UserController {
     }
     login(req: Request, res: Response, next: NextFunction ) {
         try {
-            const userRepositories = new UserRepository();
+            const userRepository = new UserRepository();
             const { email, password } = req.body;
             Object.assign(payLoad , {email, password});
-            userRepositories.findOne({email, password})
+            userRepository.findOne({email, password})
                 .then((data) => {
                     if (data) {
                         const secret = config.secret_key;

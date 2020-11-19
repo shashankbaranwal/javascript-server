@@ -26,7 +26,6 @@ export default class VersionableRepository <D extends mongoose.Document, M exten
         return this.model.count(finalQuery);
     }
     public findOne(query: any): DocumentQuery<D, D> {
-        console.log(this.model);
         const finalQuery = {deletedAt: undefined, ...query};
         return this.model.findOne(finalQuery);
     }
@@ -48,11 +47,10 @@ export default class VersionableRepository <D extends mongoose.Document, M exten
     public async userUpdate(data: any): Promise<D> {
         const previous = await this.findOne({ originalId: data.originalId, deletedAt: undefined});
         console.log('previous: ', previous);
-        if (previous) {
-            await this.invalidate(data.originalId);
-        } else {
+        if (!previous) {
             return undefined;
         }
+        await this.invalidate(data.originalId);
         const newData = Object.assign(JSON.parse(JSON.stringify(previous)), data);
         newData._id = VersionableRepository.generateObjectId();
         delete newData.deletedAt;
