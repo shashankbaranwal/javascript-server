@@ -3,5 +3,6 @@ interface IConfig {
     nodeenv: string;
     mongourl: string;
     secret_key: string;
+    PASSWORD: string;
 }
 export { IConfig };

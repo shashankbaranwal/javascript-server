@@ -6,7 +6,8 @@ const config: IConfig = {
     port: envVars.PORT,
     nodeenv: envVars.NODE_ENV,
     mongourl:  envVars.MONGO_URL,
-    secret_key: envVars.secret_key
+    secret_key: envVars.secret_key,
+    PASSWORD: envVars.password
 };
 Object.freeze(config);
 // config.PORT=7000;

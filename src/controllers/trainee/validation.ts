@@ -1,35 +1,16 @@
 const config = {
-    get: {
-        skip: {
-            required: false,
-            default: 0,
-            number: true,
-            in: ['query'],
-            errorMessage: 'Skip is invalid'
-        },
-        limit: {
-            required: false,
-            default: 10,
-            number: true,
-            in: ['query'],
-            errorMessage: 'Limit is invalid'
-        }
-    },
     create: {
-        id: {
+        password: {
             required: true,
             string: true,
             in: ['body'],
-            custom: (Value) => {
-                console.log(`Value ${Value}`);
-                throw { error: 'Error Occured', message: 'Message' };
-            }
+            errorMessage: 'Password is invalid'
         },
-        name: {
+        email: {
             required: true,
-            regex: '',
+            regex: /@successive.tech$/,
             in: ['body'],
-            errorMessage: 'Name is required'
+            errorMessage: 'Email is invalid'
         }
     },
     delete: {
@@ -39,8 +20,24 @@ const config = {
             in: ['params']
         }
     },
+    get: {
+        skip: {
+            required: false,
+            default: 0,
+            number: true,
+            in: ['query'],
+            errorMessage: 'Skip is invalid',
+        },
+        limit: {
+            required: false,
+            default: 10,
+            number: true,
+            in: ['query'],
+            errorMessage: 'Limit is invalid',
+        }
+    },
     update: {
-        id: {
+        originalId: {
             required: true,
             string: true,
             in: ['body']
@@ -49,8 +46,10 @@ const config = {
             in: ['body'],
             required: true,
             isObject: true,
+            custom(dataToUpdate) {
+                console.log('hey');
+            }
         }
     }
 };
-
 export default config;

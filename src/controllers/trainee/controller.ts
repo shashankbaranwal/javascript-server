@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import * as bcrypt from 'bcrypt';
 import UserRepositories from '../../repositories/user/UserRepository';
+
 class TraineeController {
     private userRepository;
     constructor() {
@@ -27,6 +29,8 @@ class TraineeController {
     }
     public create = async (req: Request, res: Response, next: NextFunction ) => {
         try {
+             const pass = await bcrypt.hash(req.body.password, 10);
+             req.body.password = pass;
             this.userRepository.userCreate(req.body);
             res.status(200).send({
                 message: 'trainee created successfully',
@@ -39,7 +43,14 @@ class TraineeController {
     }
     public update = async (req: Request, res: Response, next: NextFunction ) => {
         try {
-            this.userRepository.userUpdate(req.body);
+            const isIdValid = await this.userRepository.userUpdate(req.body);
+            if (!isIdValid) {
+                return next({
+                    message: 'Id is invalid',
+                    error: 'Id not found',
+                    status: 400
+                });
+            }
             res.status(200).send({
                 message: 'trainee updated successfully',
                 data: [req.body]
@@ -51,12 +62,19 @@ class TraineeController {
     public delete = async (req: Request, res: Response, next: NextFunction ) => {
         try {
             const id = req.params.id;
-            this.userRepository.delete(id);
+            const isIdValid = await this.userRepository.delete(id);
+            if (!isIdValid) {
+                return next({
+                    message: 'Id is invalid',
+                    error: 'Id not found',
+                    status: 400
+                });
+            }
             res.status(200).send({
                 message: 'trainee deleted successfully',
                 data: [
                     {
-                        Id: req.params.id
+                        Id: id
                     }
                 ],
                 status: 'success',

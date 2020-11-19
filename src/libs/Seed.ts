@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import UserRepository from '../repositories/user/UserRepository';
+import { seedData1, seedData2 } from './routes/constant';
 
 const userRepository: UserRepository = new UserRepository();
 export default () => {
@@ -11,12 +12,12 @@ export default () => {
                 const salt = bcrypt.genSaltSync(saltRounds);
                 const hashedPassword = bcrypt.hashSync(rawPassword, salt);
                 console.log('Data seeding in progress');
-                userRepository.createUser({
+                userRepository.create({
                     name: 'trainer',
                     email: 'trainer@successivetech',
                     role: 'trainer',
                     password: hashedPassword
-                }, undefined);
+                });
             }
         })
         .catch(err => console.log(err));

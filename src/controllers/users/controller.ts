@@ -1,118 +1,129 @@
 import { Response, Request, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-import IRequest from '../../IRequest';
 import { config } from '../../config';
 import UserRepository from '../../repositories/user/UserRepository';
 import { payLoad } from '../../libs/routes/constant';
 import * as bcrypt from 'bcrypt';
 
 class UserController {
+    static instance: UserController;
 
-    public async me(req: IRequest, res: Response, next: NextFunction) {
-        const id = req.query;
-        const user = new UserRepository();
+    static getInstance() {
+        if (UserController.instance) {
+            return UserController.instance;
+        }
 
-        await user.getUser({ id })
-            .then((data) => {
-                res.status(200).send({
-                    message: 'User Fetched successfully',
-                    'data': { data },
-                    code: 200
-                });
-            });
+        UserController.instance = new UserController();
+        return UserController.instance;
     }
 
-    public async create(req: IRequest, res: Response, next: NextFunction) {
-        const { id, email, name, role, password } = req.body;
-        const creater = req.userData._id;
-        const user = new UserRepository();
-        await user.createUser({ id, email, name, role, password }, creater)
-            .then(() => {
-                console.log(req.body);
-                res.send({
-                    message: 'User Created Successfully!',
-                    data: {
-                        'name': name,
-                        'email': email,
-                        'role': role,
-                        'password': password
-                    },
-                    code: 200
-                });
+    profile(req: Request, res: Response, next: NextFunction ) {
+        try {
+            res.status(200).send({
+                message: 'Profile fetched successfully',
+                data: [res.locals.userData],
+                status: 'success',
             });
+        } catch (err) {
+            console.log('error is ', err);
+        }
     }
-
-    public async update(req: IRequest, res: Response, next: NextFunction) {
-        const { id, dataToUpdate } = req.body;
-        console.log('id', id);
-        console.log('dataToUpdate', dataToUpdate);
-        const updator = req.userData._id;
-        const user = new UserRepository();
-        await user.updateUser(id, dataToUpdate, updator)
-            .then((result) => {
-                res.send({
-                    data: result,
-                    message: 'User Profile Updated',
-                    code: 200
+    async login(req: Request, res: Response, next: NextFunction ) {
+        try {
+            const userRepository = new UserRepository();
+            const { email, password } = req.body;
+            Object.assign(payLoad , {email});
+            const userData = await userRepository.findOne({email});
+            if (!userData) {
+                next ({
+                    message: 'invalid email',
+                    error: 'Authentication Failed',
+                    status: 403
                 });
-            })
-            .catch((err) => {
-                res.send({
-                    error: 'No Updated files found',
-                    code: 404
+            }
+            if (!bcrypt.compare(password, userData.password)) {
+                next({
+                    message: 'invalid password',
+                    error: 'Authentication Failed',
+                    status: 403
                 });
+            }
+            const secret = config.secret_key;
+            const tokenGenerated = jwt.sign(payLoad, secret, {expiresIn: '900s'});
+            res.status(200).send({
+                message: 'Logged in successfully',
+                data: [
+                    {
+                        token: tokenGenerated
+                    }
+                ],
+                status: 'success',
             });
+        } catch (err) {
+            console.log('error is ', err);
+        }
     }
-
-    public async delete(req: IRequest, res: Response, next: NextFunction) {
-        const id = req.params.id;
-        const remover = req.userData._id;
-        const user = new UserRepository();
-        await user.deleteData(id, remover)
-            .then((result) => {
-                res.send({
-                    message: 'Deleted successfully',
-                    code: 200
-                });
-            })
-            .catch((err) => {
-                res.send({
-                    message: 'No deleted files found',
-                    code: 404
-                });
+    get(req: Request, res: Response, next: NextFunction ) {
+        try {
+            res.status(200).send({
+                message: 'User fetched successfully',
+                data: [
+                    {
+                        name: 'User1',
+                        address: 'Noida',
+                    }
+                ]
             });
+        } catch (err) {
+            console.log('error is ', err);
+        }
     }
-
-    public async login(req: IRequest, res: Response, next: NextFunction) {
-        const { email, password } = req.body;
-        const user = new UserRepository();
-        Object.assign(payLoad , {email, password});
-        UserRepository.findOne({email, password});
-        await user.getUser({ email })
-            .then((userData) => {
-                if (userData === null) {
-                    res.status(404).send({
-                        err: 'User Not Found',
-                        code: 404
-                    });
-                    return;
-                }
-                if (!(bcrypt.compareSync(req.body.password, password))) {
-                    res.status(401).send({
-                        err: 'Invalid Password',
-                        code: 401
-                    });
-                    return;
-                }
-                const token = jwt.sign(userData.toJSON(), config.secret_key);
-                res.send({
-                    message: 'Login Successfull',
-                    status: 200,
-                    'token': token
-                });
-                return;
+    create(req: Request, res: Response, next: NextFunction ) {
+        try {
+            res.status(200).send({
+                message: 'User created successfully',
+                data: [
+                    {
+                        name: 'User2',
+                        address: 'Delhi',
+                    }
+                ]
             });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    update(req: Request, res: Response, next: NextFunction ) {
+        try {
+            res.status(200).send({
+                message: 'User updated successfully',
+                data: [
+                    {
+                        name: 'User3',
+                        address: 'Noida',
+                    }
+                ]
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
+    }
+    delete(req: Request, res: Response, next: NextFunction ) {
+        try {
+            res.status(200).send({
+                message: 'User deleted successfully',
+                data: [
+                    {
+                        name: 'User4',
+                        address: 'Faridabad',
+                    }
+                ],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
     }
 }
 
-export default new UserController();
+export default UserController.getInstance();
