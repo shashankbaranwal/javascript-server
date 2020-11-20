@@ -2,6 +2,8 @@ import { Response, Request, NextFunction } from 'express';
 import { userModel } from '../../repositories/user/UserModel';
 import * as jwt from 'jsonwebtoken';
 import IRequest from '../../IRequest';
+import { config } from '../../config';
+import UserRepository from '../../repositories/user/UserRepository';
 class UserController {
     static instance: UserController;
 
@@ -12,115 +14,138 @@ class UserController {
         UserController.instance = new UserController();
         return UserController.instance;
     }
-    get(_req: Request, res: Response, _next: NextFunction) {
-        try {
-            console.log('Inside get method of User');
-            res.send({
-                message: 'User fetched succefully',
-                data: [{
-                    name: 'user1',
 
-                },
-                {
-                    name: 'user2',
-                }]
+    get(req, res, next) {
+        try {
+            console.log('Inside get method Trainee Controller');
+            res.send({
+                message: 'Get message Successful',
+                data: [
+                    {
+                        name: 'Get Trainee ',
+                        address: 'Noida',
+                    }
+                ]
             });
         } catch (err) {
             console.log('Inside err', err);
         }
     }
-    create(req: Request, res: Response, next: NextFunction) {
-        try {
-            console.log('Inside post method of Trainee');
-            res.send({
-                message: 'User created succefully',
-                data: [{
-                    name: 'user1',
 
-                },
-                {
-                    name: 'user2',
-                }]
-            });
-        } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-    update(_req: Request, res: Response, _next: NextFunction) {
+    login(req, res) {
         try {
-            console.log('Inside put method of Trainee');
-            res.send({
-                message: 'User updated succefully',
-                data: [{
-                    name: 'user1',
-
-                },
-                {
-                    name: 'user2',
-                }]
-            });
-        } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-    delete(_req: Request, res: Response, _next: NextFunction) {
-        try {
-            console.log('Inside post method of Trainee');
-            res.send({
-                message: 'User deleted succefully',
-                data: [{
-                    name: 'user1',
-
-                },
-                {
-                    name: 'user2',
-                }]
-            });
-        } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-    login(req: IRequest, res: Response, next: NextFunction) {
-        try {
+            console.log('I am in login route');
+            console.log(req.body.email);
             const { email, password } = req.body;
-            userModel.findOne({ email: req.body.email }, (err, result) => {
-                if (result) {
-                    if (password === result.password) {
-                        console.log('result is', result.password);
-                        const token = jwt.sign({
-                            result
-                        }, 'qwertyuiopasdfghjklzxcvbnm123456');
-                        console.log(token);
+
+            userModel.findOne({ email: (email) }, (err, docs) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    if (docs === null) {
                         res.send({
-                            data: token,
-                            message: 'Login Permited',
-                            status: 200
+                            message: 'Invalid user',
+                            data1: {
+                                email: req.body.email,
+                                password: req.body.password
+                            }
                         });
                     }
                     else {
+                        console.log('Existing user is:', docs);
+
+                        const payLoad = {
+                            'iss': 'Online JWT Builder',
+                            'iat': 1604994214,
+                            'exp': 1636530214,
+                            'aud': 'www.successive.com',
+                            'sub': 'jrocket@example.com',
+                            'email': req.body.email,
+                            'password': req.body.password
+                        };
+                        const token = jwt.sign({ payLoad }, config.secret_key);
                         res.send({
-                            message: 'Password Doesnt match',
-                            status: 400
+                            Data: token,
+                            Message: 'User Exists',
+                            status: 200
                         });
                     }
                 }
-                else {
-                    res.send({
-                        message: 'Email is not Registered',
-                        status: 404
-                    });
-                }
             });
-        }
-        catch (err) {
+        } catch (err) {
             res.send(err);
         }
     }
-    me(req: IRequest, res: Response, next: NextFunction) {
-        const data = req.userData;
-        res.json({
-            data
-        });
+
+    me(req, res, next) {
+        try {
+            const token = req.headers.authorization;
+            const decorderUser = jwt.verify(token, config.secret_key);
+            userModel.findOne({ email: decorderUser.payLoad.email, password: decorderUser.payLoad.password }, (err, docs) => {
+                res.send({
+                    Data: { docs },
+                    Message: 'User Exists',
+                    status: 200
+                });
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    post(req, res, next) {
+        try {
+            console.log('Inside User post method Trainee Controller');
+            const userRepository: UserRepository = new UserRepository();
+            console.log('Data sending in progress');
+            userRepository.create(req.body);
+            res.send({
+                message: 'Post message Successful',
+                data: [
+                    {
+                        name: 'Post Route',
+                        address: 'Noida',
+                    }
+                ]
+            });
+        } catch (err) {
+            console.log('Inside err', err);
+        }
+    }
+
+    put(req, res, next) {
+        try {
+            console.log('Inside put method Trainee Controller');
+            res.send({
+                message: 'Put message Successful',
+                data: [
+                    {
+                        name: 'Trainee123',
+                        address: 'Noida',
+                    }
+                ]
+            });
+        } catch (err) {
+            console.log('Inside err', err);
+        }
+    }
+
+    delete(req, res, next) {
+        try {
+            console.log('Inside delete method Trainee Controller');
+            res.send({
+                message: 'delete message Successful',
+                data: [
+                    {
+                        name: 'Trainee123',
+                        address: 'Noida',
+                    }
+                ]
+            });
+        } catch (err) {
+            console.log('Inside err', err);
+        }
     }
 }
 

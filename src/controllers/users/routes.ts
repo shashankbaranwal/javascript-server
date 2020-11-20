@@ -9,15 +9,13 @@ import { Router } from 'express';
 const UserRouter = express.Router();
 
 UserRouter.route('/')
-    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.get)
-    .post(authMiddleWare('getUsers', 'write'), validationHandler(config.get), UserController.create)
-    .put(authMiddleWare('getUsers', 'all'), validationHandler(config.get), UserController.update)
-    .delete(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.delete);
-
-UserRouter.route('/me')
-    .get(authMiddleWare('getUsers', 'all'), UserController.me);
-
+    .get(UserController.get)                                       // validationHandler(config.get),
+    .post(UserController.post)                                    // validationHandler(config.create),
+    .put(UserController.put)                                     // validationHandler(config.update),
+    .delete(UserController.delete);                             // validationHandler(config.delete),
 UserRouter.route('/login')
-    .post(validationHandler(config.login), UserController.login);
+    .post(UserController.login);
+UserRouter.route('/me')
+    .get(UserController.me);
 
 export default UserRouter;
