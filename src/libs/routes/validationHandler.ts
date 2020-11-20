@@ -1,90 +1,60 @@
 import { NextFunction, Request, Response } from 'express';
 // import { isNullOrUndefined } from 'util';
-export const validationHandler = (config) => (req: Request, res: Response, next: NextFunction) => {
-        const errors = [];
-        console.log('Inside ValidationHandler Middleware');
-        console.log(req.body);
-        console.log(req.query);
-        console.log(Object.keys(req.query).length);
-        const keys = Object.keys(config);
-        keys.forEach((key) => {
-            const obj = config[key];
-            console.log('key is', key);
-            const values = obj.in.map((val) => {
-                return req[val][key];
-            });
-
-            // Checking for In i.e Body or Query
-            console.log('body is', req[obj.in]);
-            console.log('body', Object.keys(req[obj.in]).length);
-            if (Object.keys(req[obj.in]).length === 0) {
-                errors.push({
-                    message: `Values should be passed through ${obj.in}`,
-                    status: 400
-                });
+export const validationHandler = ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
+    const error = [];
+    Object.keys(config).forEach((keys) => {
+        const inObject = config[keys];
+        inObject.in.forEach(inside => {
+            let value = req[inside][keys];
+            const a = {
+                key : '',
+                location: '',
+                errorMessage: ''
+            };
+            if ((inObject.required) && !(value)) {
+                a.key = keys;
+                a.location = inside;
+                a.errorMessage = inObject.errorMessage || `${keys} is required`;
+                error.push(a);
+                return;
             }
-
-            // Checking for required
-            console.log('values is', values);
-            if (obj.required) {
-                if (isNull(values[0])) {
-                    errors.push({
-                        message: `${key} is required`,
-                        status: 404
-                    });
-                }
+            value = value || inObject.default;
+            if (!value) {
+                return;
             }
-            if (obj.string) {
-                if (!(typeof (values[0]) === 'string')) {
-                    errors.push({
-                        message: `${key} Should be a String`,
-                        status: 404
-                    });
-                }
+            if ((inObject.number) && !(Number.isInteger(Number(value)))) {
+                a.key = keys;
+                a.location = inside;
+                a.errorMessage = inObject.errorMessage || `${keys}'s type is not number`;
+                error.push(a);
+                return;
             }
-            if (obj.isObject) {
-                if (!(typeof (values) === 'object')) {
-                    errors.push({
-                        message: `${key} Should be an object`,
-                        status: 404
-                    });
-                }
+            if ((inObject.string) && !(typeof value === 'string')) {
+                a.key = keys;
+                a.location = inside;
+                a.errorMessage = inObject.errorMessage || `${keys}'s type is not string`;
+                error.push(a);
+                return;
             }
-            if (obj.regex) {
-                const regex = obj.regex;
-                if (!regex.test(values[0])) {
-                    errors.push({
-                        message: `${key} is not valid expression`,
-                        status: 400,
-                    });
-                }
+            const regex = inObject.regex;
+            if ((regex) && !regex.test(value)) {
+                a.key = keys;
+                a.location = inside;
+                a.errorMessage = inObject.errorMessage || `${keys} is invalid`;
+                error.push(a);
+                return;
             }
-            if (obj.default) {
-                if (values[0] === '') {
-                    // tslint:disable-next-line: no-unused-expression
-                    values[0] === obj.default;
-                }
+            if (inObject.isObject && (!(typeof value === 'object') || !(Object.entries(value).length))) {
+                a.key = keys;
+                a.location = inside;
+                a.errorMessage = `${keys} is invalid`;
+                error.push(a);
+                return;
             }
-            if (obj.number) {
-                if (isNaN(values[0]) || values[0] === undefined) {
-                    errors.push({
-                        message: `${key}  must be an number`,
-                        status: 400,
-                    });
-                }
-            }
-
         });
-        if (errors.length > 0) {
-            res.status(400).send({ errors });
-        }
-        else {
-            next();
-        }
-    };
-
-    function isNull(obj) {
-        const a = (obj === undefined || obj === null);
-        return a;
+    });
+    if (error.length) {
+        return res.status(400).send(error);
     }
-
+    next ();
+};
