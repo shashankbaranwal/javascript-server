@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import Seed from './Seed';
 class Database {
     static open(mongoURL) {
         return new Promise((resolve, reject) => {
@@ -9,14 +10,18 @@ class Database {
                 reject(err);
                 return;
             }
-            // tslint:disable-next-line: no-null-keyword
-            resolve(undefined);
+            Seed();
+            resolve();
         });
     });
     }
     static disconnect() {
-        console.log('Inside Disconnect method');
-        mongoose.disconnect();
-}
+        mongoose.disconnect(err => {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Database Disconnected');
+        });
+    }
 }
 export default Database;

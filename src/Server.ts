@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import Database from './libs/Database';
 import mainRouter from './router';
+import Database from './libs/Database';
 import { errorHandler } from './libs/routes/errorHandler';
 import { notFoundRoute } from './libs/routes/notFoundRoute';
 class Server {
@@ -16,7 +17,7 @@ class Server {
     }
     public setupRouts() {
         const { app } = this;
-        app.use('/health-check', (req, res) => {
+        app.use('/health-check', (_req, res) => {
             console.log('inside Second middleware');
             res.send('I am OK');
         });
@@ -45,7 +46,6 @@ class Server {
         })
         .catch(err => console.log(err));
         return this;
-
     }
 }
 export default Server;

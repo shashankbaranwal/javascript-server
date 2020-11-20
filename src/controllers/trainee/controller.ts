@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-
 class TraineeController {
     static instance: TraineeController;
 
@@ -7,7 +6,6 @@ class TraineeController {
         if (TraineeController.instance) {
             return TraineeController.instance;
         }
-
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
@@ -64,7 +62,6 @@ class TraineeController {
         try {
             console.log('Inside delete method of Trainee Controller');
             res.send({
-
                 message: 'Trainees Deleted successfully',
                 data: {
                     name: 'Trainee',
@@ -74,7 +71,6 @@ class TraineeController {
 
         } catch (err) {
             console.log('inside err', err);
-
         }
     }
 }
