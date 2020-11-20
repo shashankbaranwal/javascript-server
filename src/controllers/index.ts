@@ -1,2 +1,2 @@
 export { traineeRouter } from './trainee';
-export { UserRouter } from './users';
+export { userRouter } from './users';

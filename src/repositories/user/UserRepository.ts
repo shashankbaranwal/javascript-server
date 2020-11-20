@@ -14,7 +14,6 @@ export default class UserRepositories extends VersionableRepository<IUserModel, 
     public static readOne(query): mongoose.DocumentQuery<IUserModel, IUserModel, {}> {
         return userModel.findOne(query).lean();
     }
-
     public create(data: any): Promise<IUserModel> {
         console.log('User Data:', data);
         const id = UserRepositories.generateObjectId();
