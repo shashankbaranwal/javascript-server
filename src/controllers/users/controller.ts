@@ -7,7 +7,6 @@ import * as bcrypt from 'bcrypt';
 import { userModel } from '../../repositories/user/UserModel';
 import IRequest from '../../IRequest';
 
-
 class UserController {
     public userRepository: UserRepository; // = new UserRepository();
     static instance: UserController;
@@ -23,9 +22,14 @@ class UserController {
     async get(req, res, next) {
         try {
             const userRepository = new UserRepository();
-            const extractedData = await userRepository.getAll(req.body, {}, {});
+            const sort = {};
+            sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
+            console.log(sort);
+            const extractedData = await userRepository.getAll(req.body).sort(sort).skip(Number(req.query.skip)).limit(Number(req.query.limit));
             res.status(200).send({
                 message: 'trainee fetched successfully',
+                totalCount: await userRepository.count(req.body),
+                count: extractedData.length,
                 data: [extractedData],
                 status: 'success',
             });
