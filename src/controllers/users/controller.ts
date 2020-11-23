@@ -5,6 +5,8 @@ import UserRepository from '../../repositories/user/UserRepository';
 import { payLoad } from '../../libs/routes/constant';
 import * as bcrypt from 'bcrypt';
 import { userModel } from '../../repositories/user/UserModel';
+import IRequest from '../../IRequest';
+
 
 class UserController {
     public userRepository: UserRepository; // = new UserRepository();
@@ -82,6 +84,7 @@ class UserController {
         try {
             console.log('I am in login route');
             const { email , password } = req.body;
+            console.log(req.body.email);
             userModel.findOne({ email: (email) }, (err, docs) => {
                     if (bcrypt.compareSync(password, docs.password)) {
                         console.log('Existing user is:', docs);

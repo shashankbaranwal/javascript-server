@@ -33,17 +33,3 @@ export const payLoad = {
     'email': '',
     'password': ''
 };
-
-export const seedData1 = {
-    name: 'Head-Trainer',
-    email: 'head.trainer@successive.tech',
-    role: 'head-trainer',
-    password: 'headhead'
-};
-
-export const seedData2 = {
-    name: 'Trainer',
-    email: 'trainer@successive.tech',
-    role: 'trainer',
-    password: 'trainertrainer'
-};

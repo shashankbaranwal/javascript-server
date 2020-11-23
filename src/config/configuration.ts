@@ -10,7 +10,7 @@ const config: IConfig = {
     NODE_ENV: envVars.NODE_ENV,
     MONGO_URL: envVars.MONGO_URL,
     secret_key: envVars.secret_key,
-    password: envVars.password
+    PASSWORD: envVars.PASSWORD
 };
 Object.freeze(config);
 export default config;

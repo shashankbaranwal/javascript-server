@@ -1,24 +1,26 @@
-import * as bcrypt from 'bcrypt';
+import { userModel } from '../repositories/user/UserModel';
 import UserRepository from '../repositories/user/UserRepository';
-import { seedData1, seedData2 } from './routes/constant';
+import * as bcrypt from 'bcrypt';
+import { config } from '../config';
 
 const userRepository: UserRepository = new UserRepository();
+
 export default () => {
-    userRepository.count()
-        .then(res => {
+    console.log(config.PASSWORD);
+    userRepository.countData()
+        .then((res) => {
             if (res === 0) {
-                const rawPassword = process.env.password;
-                const saltRounds = 10;
-                const salt = bcrypt.genSaltSync(saltRounds);
-                const hashedPassword = bcrypt.hashSync(rawPassword, salt);
-                console.log('Data seeding in progress');
-                userRepository.create({
-                    name: 'trainer',
-                    email: 'trainer@successivetech',
-                    role: 'trainer',
-                    password: hashedPassword
+                console.log('Inserting Data...');
+                userRepository.userCreate({
+                    name: 'Head-Trainer',
+                    email: 'headtrainer@successive.tech',
+                    role: 'head.trainer',
+                    password: config.PASSWORD
                 });
             }
+            else {
+                console.log(res);
+            }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
 };
