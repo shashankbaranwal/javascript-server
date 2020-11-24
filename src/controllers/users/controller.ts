@@ -22,6 +22,29 @@ class UserController {
     async get(req, res, next) {
         try {
             const userRepository = new UserRepository();
+            const Search = req.query.search as string || '';
+            console.log(Search);
+            let value = '';
+            let key = '';
+            const regexName = /^[a-z]+$/i;
+            const regexEmail = /\b[a-zA-Z0-9+_.-]+@[a-z]+\.[a-z]{2,}\b/;
+            if (req.query.search) {
+                if (regexName.test(Search)) {
+                    value = Search;
+                    key = 'name';
+                }
+                else if (regexEmail.test(Search)) {
+                    value = Search;
+                    key = 'email';
+                }
+                else {
+                    console.log('Search Successfully');
+                }
+            }
+            else {
+                key = undefined;
+                value = undefined;
+            }
             const sort = {};
             sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
             console.log(sort);
@@ -37,7 +60,6 @@ class UserController {
             console.log('error: ', err);
         }
     }
-
 
     async create(req: Request, res: Response, next: NextFunction) {
         try {
@@ -87,29 +109,29 @@ class UserController {
     async login(req, res) {
         try {
             console.log('I am in login route');
-            const { email , password } = req.body;
+            const { email, password } = req.body;
             console.log(req.body.email);
             userModel.findOne({ email: (email) }, (err, docs) => {
-                    if (bcrypt.compareSync(password, docs.password)) {
-                        console.log('Existing user is:', docs);
-                        const token = jwt.sign({docs}, config.secret_key, { expiresIn: '15m' });
-                        const decorderUser = jwt.verify(token, config.secret_key);
-                        console.log(decorderUser);
-                        res.send({
-                            Data: token,
-                            Message: 'User Exists',
-                            status: 200
-                        });
-                    }
-                    else {
-                        res.send({
-                                message: 'Invalid user',
-                                data1: {
-                                    email: req.body.email,
-                                    password: req.body.password
-                                }
-                            });
-                    }
+                if (bcrypt.compareSync(password, docs.password)) {
+                    console.log('Existing user is:', docs);
+                    const token = jwt.sign({ docs }, config.secret_key, { expiresIn: '15m' });
+                    const decorderUser = jwt.verify(token, config.secret_key);
+                    console.log(decorderUser);
+                    res.send({
+                        Data: token,
+                        Message: 'User Exists',
+                        status: 200
+                    });
+                }
+                else {
+                    res.send({
+                        message: 'Invalid user',
+                        data1: {
+                            email: req.body.email,
+                            password: req.body.password
+                        }
+                    });
+                }
             });
         } catch (err) {
             res.send(err);
@@ -123,14 +145,14 @@ class UserController {
             const email = decorderUser.docs.email;
             console.log(token, email);
             userModel.findOne({ email: (email) }, (err, docs) => {
-                    res.send({
-                            message: 'User Details',
-                            data: {
-                                docs,
-                            }
-                        });
-        });
-    }
+                res.send({
+                    message: 'User Details',
+                    data: {
+                        docs,
+                    }
+                });
+            });
+        }
         catch (err) {
             console.log(err);
         }

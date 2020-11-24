@@ -8,7 +8,7 @@ const config = {
             in: ['body'],
             custom: (value) => {
                 console.log('Value', value);
-                throw { error: 'Error Occured', message: 'Message'};
+                throw { error: 'Error Occured', message: 'Message' };
             }
         },
         name:
@@ -45,6 +45,12 @@ const config = {
             number: true,
             in: ['query'],
             errorMessage: 'Limit is invalid',
+        },
+        search:
+        {
+            required: false,
+            string: true,
+            in: ['params'],
         }
     },
     update:
@@ -53,8 +59,10 @@ const config = {
         {
             required: true,
             string: true,
-            in: ['body'] },
-            dataToUpdate: { in: ['body'],
+            in: ['body']
+        },
+        dataToUpdate: {
+            in: ['body'],
             required: true,
             isObject: true,
             // custom: (dataToUpdate) => {},
