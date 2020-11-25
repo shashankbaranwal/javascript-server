@@ -4,11 +4,12 @@ import mainRouter from './router';
 import Database from './libs/Database';
 import { errorHandler } from './libs/routes/errorHandler';
 import { notFoundRoute } from './libs/routes/notFoundRoute';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json';
 class Server {
     app;
     constructor(private config) {
         this.app = express();
-
     }
     bootstrap() {
         this.initBodyParser();
@@ -24,6 +25,8 @@ class Server {
         this.app.use('/api', mainRouter);
         this.app.use(notFoundRoute);
         this.app.use(errorHandler);
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
         return this;
     }
     public initBodyParser() {
@@ -32,19 +35,19 @@ class Server {
     run() {
         const { app, config: { PORT } } = this;
         Database.open('mongodb://localhost:27017/express-training')
-        .then((res) => {
-            console.log('Succesfully connected to Mongo');
-            app.listen(PORT, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log(`App is running on port ${PORT}`);
-                    // Database.disconnect();
-                }
-            });
-        })
-        .catch(err => console.log(err));
+            .then((res) => {
+                console.log('Succesfully connected to Mongo');
+                app.listen(PORT, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log(`App is running on port ${PORT}`);
+                        // Database.disconnect();
+                    }
+                });
+            })
+            .catch(err => console.log(err));
         // return this;
     }
 }
