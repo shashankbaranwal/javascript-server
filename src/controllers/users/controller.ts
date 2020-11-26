@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import { config } from '../../config';
 import UserRepository from '../../repositories/user/UserRepository';
 import { payLoad } from '../../libs/routes/constant';
+import { userModel } from '../../repositories/user/UserModel';
 
 class UserController {
     static instance: UserController;
@@ -16,7 +17,7 @@ class UserController {
         return UserController.instance;
     }
 
-    profile(req: Request, res: Response, next: NextFunction ) {
+    me(req: Request, res: Response, next: NextFunction ) {
         try {
             res.status(200).send({
                 message: 'Profile fetched successfully',

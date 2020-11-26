@@ -6,7 +6,7 @@ import config from './validation';
 const UserRouter = express.Router();
 
 UserRouter.route('/me')
-    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.profile);
+    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.me);
 UserRouter.route('/login')
     .post(validationHandler(config.create), UserController.login);
 UserRouter.route('/')
