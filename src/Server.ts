@@ -4,8 +4,8 @@ import mainRouter from './router';
 import Database from './libs/Database';
 import { errorHandler } from './libs/routes/errorHandler';
 import { notFoundRoute } from './libs/routes/notFoundRoute';
-import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json';
+import * as swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger.json';
 class Server {
     app;
     constructor(private config) {
@@ -23,9 +23,9 @@ class Server {
             res.send('I am OK');
         });
         this.app.use('/api', mainRouter);
+        this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
         this.app.use(notFoundRoute);
         this.app.use(errorHandler);
-        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
         return this;
     }

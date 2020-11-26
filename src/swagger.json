@@ -2,21 +2,15 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0",
-      "title": "My User Project CRUD",
-      "description": "My User Project Application API",
+      "title": "Express Training API",
+      "description": "Express Training API with Swagger",
       "license": {
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT"
       }
     },
-    "host": "localhost:8000",
+    "host": "localhost:9000",
     "basePath": "/",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      }
-    ],
     "schemes": [
       "http"
     ],
@@ -30,7 +24,7 @@
       "/addUser": {
         "post": {
           "tags": [
-            "Users"
+            "Trainee"
           ],
           "description": "Create new user in system",
           "parameters": [
@@ -59,7 +53,7 @@
       "/users": {
         "get": {
             "tags": [
-              "Users"
+              "Trainee"
             ],
             "summary": "Get all users in system",
             "responses": {
@@ -85,7 +79,7 @@
         "delete": {
           "summary": "Delete user with given ID",
           "tags": [
-            "Users"
+            "Trainee"
           ],
           "responses": {
             "200": {
@@ -99,7 +93,7 @@
         "put": {
           "summary": "Update user with give ID",
           "tags": [
-            "Users"
+            "Trainee"
           ],
           "parameters": [
             {
@@ -122,6 +116,7 @@
         }
       }
     },
+    
     "definitions": {
       "User": {
         "required": [
