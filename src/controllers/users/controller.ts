@@ -77,23 +77,14 @@ class UserController {
             res.send(err);
         }
     }
-
-    me(req, res, next) {
-        try {
-            const token = req.headers.authorization;
-            const decorderUser = jwt.verify(token, config.secret_key);
-            userModel.findOne({ email: decorderUser.payLoad.email, password: decorderUser.payLoad.password }, (err, docs) => {
-                res.send({
-                    Data: { docs },
-                    Message: 'User Exists',
-                    status: 200
-                });
-            });
-        } catch (err) {
-            console.log(err);
-        }
+    me( req: IRequest, res: Response, next: NextFunction ) {
+        const data = req.userData;
+        res.json(200)( {
+            message: 'Me',
+            status: 'Ok',
+            data
+       } );
     }
-
     post(req, res, next) {
         try {
             console.log('Inside User post method Trainee Controller');
