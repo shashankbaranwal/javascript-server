@@ -32,7 +32,7 @@ const config = {
             errorMessage: 'Name is required'
         }
     },
-    Delete: {
+    delete: {
         id: {
             required: true,
             errorMessage: 'Id is required',
@@ -49,6 +49,18 @@ const config = {
             in: ['body'],
             required: true,
             isObject: true,
+        }
+    },
+    login: {
+        email: {
+            required: true,
+            string: true,
+            in: ['body']
+        },
+        password: {
+            required: true,
+            string: true,
+            in: ['body']
         }
     }
 };

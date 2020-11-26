@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 class UserSchema extends mongoose.Schema {
-    constructor(_collections: any) {
+    constructor(collections: any) {
         const baseSchema = Object.assign({
             _id: String,
             name: String,
@@ -9,7 +9,7 @@ class UserSchema extends mongoose.Schema {
             role: String,
             password: String,
         });
-        super(baseSchema, _collections);
+        super(baseSchema, collections);
     }
 }
 export default UserSchema;

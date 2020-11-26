@@ -1,6 +1,5 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
-import Database from './libs/Database';
 import mainRouter from './router';
 import Database from './libs/Database';
 import { errorHandler } from './libs/routes/errorHandler';
@@ -12,6 +11,7 @@ class Server {
 
     }
     bootstrap() {
+        this.initBodyParser();
         this.setupRouts();
         return this;
     }
@@ -27,7 +27,7 @@ class Server {
         return this;
     }
     public initBodyParser() {
-        this.app.use(bodyparser.json({ type: 'application/**json' }));
+        this.app.use(bodyparser.json());
     }
     run() {
         const { app, config: { PORT } } = this;
@@ -40,12 +40,12 @@ class Server {
                 }
                 else {
                     console.log(`App is running on port ${PORT}`);
-                    Database.disconnect();
+                    // Database.disconnect();
                 }
             });
         })
         .catch(err => console.log(err));
-        return this;
+        // return this;
     }
 }
 export default Server;

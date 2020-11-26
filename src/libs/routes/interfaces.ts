@@ -1,7 +1,7 @@
-interface IUsers {
-    traineeEmail: string;
-    reviewerEmail: string;
-}
+// interface IUsers {
+//     traineeEmail: string;
+//     reviewerEmail: string;
+// }
 
 type access = {
     all: string[];
@@ -12,5 +12,5 @@ type access = {
 
 interface IPermissions {
     getUsers: access;
-    getUser: access;
+    // getUser: access;
 }
