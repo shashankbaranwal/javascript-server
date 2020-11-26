@@ -11,6 +11,7 @@ class Server {
 
     }
     bootstrap() {
+        this.initBodyParser();
         this.setupRouts();
         return this;
     }
@@ -26,7 +27,7 @@ class Server {
         return this;
     }
     public initBodyParser() {
-        this.app.use(bodyparser.json({ type: 'application/**json' }));
+        this.app.use(bodyparser.json());
     }
     run() {
         const { app, config: { port } } = this;

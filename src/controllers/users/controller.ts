@@ -28,36 +28,50 @@ class UserController {
             console.log('error is ', err);
         }
     }
-    login(req: Request, res: Response, next: NextFunction ) {
+    login(req, res) {
         try {
-            const userRepository = new UserRepository();
+            console.log('I am in login route');
+            console.log(req.body.email);
             const { email, password } = req.body;
-            Object.assign(payLoad , {email, password});
-            userRepository.findOne({email, password})
-                .then((data) => {
-                    if (data) {
-                        const secret = config.secret_key;
-                        const tokenGenerated = jwt.sign(payLoad, secret);
-                        res.status(200).send({
-                            message: 'Logged in successfully',
-                            data: [
-                                {
-                                    token: tokenGenerated
-                                }
-                            ],
-                            status: 'success',
+
+            userModel.findOne({ email: (email) }, (err, docs) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    if (docs === null) {
+                        res.send({
+                            message: 'Invalid user',
+                            data1: {
+                                email: req.body.email,
+                                password: req.body.password
+                            }
                         });
                     }
-                })
-                .catch((err) => {
-                    next ({
-                        message: 'invalid email or password',
-                        error: 'Authentication Failed',
-                        status: 403
-                    });
-                });
+                    else {
+                        console.log('Existing user is:', docs);
+
+                        // tslint:disable-next-line: no-shadowed-variable
+                        const payLoad = {
+                            'iss': 'Online JWT Builder',
+                            'iat': 1604994214,
+                            'exp': 1636530214,
+                            'aud': 'www.successive.com',
+                            'sub': 'jrocket@example.com',
+                            'email': req.body.email,
+                            'password': req.body.password
+                        };
+                        const token = jwt.sign({ payLoad }, config.secret_key);
+                        res.send({
+                            Data: token,
+                            Message: 'User Exists',
+                            status: 200
+                        });
+                    }
+                }
+            });
         } catch (err) {
-            console.log('error is ', err);
+            res.send(err);
         }
     }
     get(req: Request, res: Response, next: NextFunction ) {
