@@ -13,9 +13,9 @@ class TraineeController {
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
-    public get = async (req: Request, res: Response, next: NextFunction ) => {
+    public get =  (req: Request, res: Response, next: NextFunction ) => {
         try {
-            const extractedData = await this.userRepository.findAll(req.body, {}, {});
+            const extractedData =  this.userRepository.getAll(req.body, {}, {});
             res.status(200).send({
                 message: 'trainee fetched successfully',
                 data: [extractedData],
@@ -25,9 +25,9 @@ class TraineeController {
             console.log('error is ', err);
         }
     }
-    public create = async (req: Request, res: Response, next: NextFunction ) => {
+    public create =  (req: Request, res: Response, next: NextFunction ) => {
         try {
-            this.userRepository.userCreate(req.body);
+            this.userRepository.create(req.body);
             res.status(200).send({
                 message: 'trainee created successfully',
                 data: [req.body],
@@ -37,9 +37,9 @@ class TraineeController {
             console.log('error is ', err);
         }
     }
-    public update = async (req: Request, res: Response, next: NextFunction ) => {
+    public update = (req: Request, res: Response, next: NextFunction ) => {
         try {
-            const isIdValid = await this.userRepository.userUpdate(req.body);
+            const isIdValid =  this.userRepository.update(req.body);
             if (!isIdValid) {
                 return next({
                     message: 'Id is invalid',
@@ -55,10 +55,10 @@ class TraineeController {
             console.log('error is ', err);
         }
     }
-    public delete = async (req: Request, res: Response, next: NextFunction ) => {
+    public delete = (req: Request, res: Response, next: NextFunction ) => {
         try {
             const id = req.params.id;
-            const isIdValid = await this.userRepository.delete(id);
+            const isIdValid = this.userRepository.delete(id);
             if (!isIdValid) {
                 return next({
                     message: 'Id is invalid',

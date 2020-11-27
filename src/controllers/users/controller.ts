@@ -74,59 +74,55 @@ class UserController {
             res.send(err);
         }
     }
-    get(req: Request, res: Response, next: NextFunction ) {
+    get(req, res, next) {
         try {
+            const userRepository = new UserRepository();
+            const extractedData =  userRepository.getAll(req.body, {}, {});
             res.status(200).send({
-                message: 'User fetched successfully',
-                data: [
-                    {
-                        name: 'User1',
-                        address: 'Noida',
-                    }
-                ]
+                message: 'trainee fetched successfully',
+                data: [extractedData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error: ', err);
+        }
+    }
+
+    create(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userRepository = new UserRepository();
+            userRepository.create(req.body);
+            res.status(200).send({
+                message: 'Data created successfully',
+                data: [req.body],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error: ', err);
+        }
+    }
+    update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userRepository = new UserRepository();
+            userRepository.update(req.body);
+            res.status(200).send({
+                message: 'trainee updated successfully',
+                data: [req.body]
             });
         } catch (err) {
             console.log('error is ', err);
         }
     }
-    create(req: Request, res: Response, next: NextFunction ) {
+
+    delete(req: Request, res: Response, next: NextFunction) {
         try {
+            const userRepository = new UserRepository();
+            userRepository.delete(req.body);
             res.status(200).send({
-                message: 'User created successfully',
+                message: 'trainee deleted successfully',
                 data: [
                     {
-                        name: 'User2',
-                        address: 'Delhi',
-                    }
-                ]
-            });
-        } catch (err) {
-            console.log('error is ', err);
-        }
-    }
-    update(req: Request, res: Response, next: NextFunction ) {
-        try {
-            res.status(200).send({
-                message: 'User updated successfully',
-                data: [
-                    {
-                        name: 'User3',
-                        address: 'Noida',
-                    }
-                ]
-            });
-        } catch (err) {
-            console.log('error is ', err);
-        }
-    }
-    delete(req: Request, res: Response, next: NextFunction ) {
-        try {
-            res.status(200).send({
-                message: 'User deleted successfully',
-                data: [
-                    {
-                        name: 'User4',
-                        address: 'Faridabad',
+                        'action': `data has deleted with id -> ${req.body.originalId}`
                     }
                 ],
                 status: 'success',
