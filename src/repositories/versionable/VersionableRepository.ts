@@ -17,7 +17,6 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
         const id = VersioningRepository.generateObjectId();
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(options.password, salt);
-        console.log('----------');
         options.password = hash;
         const model = new this.model({
             _id: id,

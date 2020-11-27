@@ -3,8 +3,11 @@ import * as bcrypt from 'bcrypt';
 import UserRepositories from '../../repositories/user/UserRepository';
 
 class TraineeController {
+    private userRepository;
+    constructor() {
+        this.userRepository = new UserRepositories();
+    }
     static instance: TraineeController;
-
     static getInstance() {
         if (TraineeController.instance) {
             return TraineeController.instance;
@@ -12,72 +15,70 @@ class TraineeController {
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
-
-    async get(req, res, next) {
+    public get =  (req: Request, res: Response, next: NextFunction ) => {
         try {
-            console.log('Inside get method Trainee Controller');
-            res.send({
-                message: 'Get message Successful',
-                data: [
-                    {
-                        name: 'Get Trainee ',
-                        address: 'Noida',
-                    }
-                ]
+            const extractedData =  this.userRepository.getAll(req.body, {}, {});
+            res.status(200).send({
+                message: 'trainee fetched successfully',
+                data: [extractedData],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
         }
     }
-
-    async post(req, res, next) {
+    public create =  (req: Request, res: Response, next: NextFunction ) => {
         try {
-            console.log('Inside get method Trainee Controller');
-            res.send({
-                message: 'Post message Successful',
-                data: [
-                    {
-                        name: 'Post Trainee123',
-                        address: 'Noida',
-                    }
-                ]
+            this.userRepository.create(req.body);
+            res.status(200).send({
+                message: 'trainee created successfully',
+                data: [req.body],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
         }
     }
-
-    async put(req, res, next) {
+    public update = (req: Request, res: Response, next: NextFunction ) => {
         try {
-            console.log('Inside get method Trainee Controller');
-            res.send({
-                message: 'Put message Successful',
-                data: [
-                    {
-                        name: 'Trainee123',
-                        address: 'Noida',
-                    }
-                ]
+            const isIdValid =  this.userRepository.update(req.body);
+            if (!isIdValid) {
+                return next({
+                    message: 'Id is invalid',
+                    error: 'Id not found',
+                    status: 400
+                });
+            }
+            res.status(200).send({
+                message: 'trainee updated successfully',
+                data: [req.body]
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
         }
     }
-
-    async delete(req, res, next) {
+    public delete = (req: Request, res: Response, next: NextFunction ) => {
         try {
-            console.log('Inside get method Trainee Controller');
-            res.send({
-                message: 'delete message Successful',
+            const id = req.params.id;
+            const isIdValid = this.userRepository.delete(id);
+            if (!isIdValid) {
+                return next({
+                    message: 'Id is invalid',
+                    error: 'Id not found',
+                    status: 400
+                });
+            }
+            res.status(200).send({
+                message: 'trainee deleted successfully',
                 data: [
                     {
-                        name: 'Trainee123',
-                        address: 'Noida',
+                        Id: id
                     }
-                ]
+                ],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
         }
     }
 }

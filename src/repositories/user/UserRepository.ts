@@ -7,6 +7,9 @@ import VersionableRepository from '../versionable/VersionableRepository';
 
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
 
+    public static generateObjectId() {
+        return String(mongoose.Types.ObjectId());
+    }
     constructor() {
         super(userModel);
     }
