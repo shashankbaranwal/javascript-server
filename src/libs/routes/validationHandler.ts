@@ -6,16 +6,16 @@ export const validationHandler = ( config ) => ( req: Request, res: Response, ne
         const inObject = config[keys];
         inObject.in.forEach(inside => {
             let value = req[inside][keys];
-            const a = {
+            const temp = {
                 key : '',
                 location: '',
                 errorMessage: ''
             };
             if ((inObject.required) && !(value)) {
-                a.key = keys;
-                a.location = inside;
-                a.errorMessage = inObject.errorMessage || `${keys} is required`;
-                error.push(a);
+                temp.key = keys;
+                temp.location = inside;
+                temp.errorMessage = inObject.errorMessage || `${keys} is required`;
+                error.push(temp);
                 return;
             }
             value = value || inObject.default;
@@ -23,32 +23,32 @@ export const validationHandler = ( config ) => ( req: Request, res: Response, ne
                 return;
             }
             if ((inObject.number) && !(Number.isInteger(Number(value)))) {
-                a.key = keys;
-                a.location = inside;
-                a.errorMessage = inObject.errorMessage || `${keys}'s type is not number`;
-                error.push(a);
+                temp.key = keys;
+                temp.location = inside;
+                temp.errorMessage = inObject.errorMessage || `${keys}'s type is not number`;
+                error.push(temp);
                 return;
             }
             if ((inObject.string) && !(typeof value === 'string')) {
-                a.key = keys;
-                a.location = inside;
-                a.errorMessage = inObject.errorMessage || `${keys}'s type is not string`;
-                error.push(a);
+                temp.key = keys;
+                temp.location = inside;
+                temp.errorMessage = inObject.errorMessage || `${keys}'s type is not string`;
+                error.push(Error);
                 return;
             }
             const regex = inObject.regex;
             if ((regex) && !regex.test(value)) {
-                a.key = keys;
-                a.location = inside;
-                a.errorMessage = inObject.errorMessage || `${keys} is invalid`;
-                error.push(a);
+                temp.key = keys;
+                temp.location = inside;
+                temp.errorMessage = inObject.errorMessage || `${keys} is invalid`;
+                error.push(temp);
                 return;
             }
             if (inObject.isObject && (!(typeof value === 'object') || !(Object.entries(value).length))) {
-                a.key = keys;
-                a.location = inside;
-                a.errorMessage = `${keys} is invalid`;
-                error.push(a);
+                temp.key = keys;
+                temp.location = inside;
+                temp.errorMessage = `${keys} is invalid`;
+                error.push(temp);
                 return;
             }
         });
