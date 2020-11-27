@@ -4,8 +4,8 @@ import mainRouter from './router';
 import Database from './libs/Database';
 import { errorHandler } from './libs/routes/errorHandler';
 import { notFoundRoute } from './libs/routes/notFoundRoute';
-import * as swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from './swagger.json';
+import * as swaggerJsDoc from 'swagger-jsdoc';
+import * as swaggerUI from 'swagger-ui-express';
 class Server {
     app;
     constructor(private config) {
@@ -16,6 +16,28 @@ class Server {
         this.setupRouts();
         return this;
     }
+    initSwagger = () => {
+        const options = {
+            definition: {
+                info: {
+                    title: 'JavaScript-Server API Swagger',
+                    version: '1.0.0',
+                },
+                securityDefinitions: {
+                    Bearer: {
+                        type: 'apiKey',
+                        name: 'Authorization',
+                        in: 'headers'
+                    }
+                }
+            },
+            basePath: '/api',
+            swagger: '4.1',
+            apis: ['./src/controllers/**/routes.ts'],
+        };
+        const swaggerSpec = swaggerJsDoc(options);
+        return swaggerSpec;
+    }
     public setupRouts() {
         const { app } = this;
         app.use('/health-check', (_req, res) => {
@@ -23,7 +45,7 @@ class Server {
             res.send('I am OK');
         });
         this.app.use('/api', mainRouter);
-        this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        app.use('/swagger', swaggerUI.serve, swaggerUI.setup(this.initSwagger()));
         this.app.use(notFoundRoute);
         this.app.use(errorHandler);
 
