@@ -1,18 +1,19 @@
 import * as express from 'express';
 import UserController from './controller';
 import { authMiddleWare } from '../../libs/routes/authMiddleWare';
-import { permissions } from '../../libs/routes/constant';
 import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
-import { Router } from 'express';
-
 const UserRouter = express.Router();
 
 UserRouter.route('/')
-    .get(UserController.get)                                       // validationHandler(config.get),
-    .post(UserController.post)                                    // validationHandler(config.create),
-    .put(UserController.put)                                     // validationHandler(config.update),
-    .delete(UserController.delete);                             // validationHandler(config.delete),
+    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.get)
+    .post(authMiddleWare('getUsers', 'write'), validationHandler(config.create), UserController.create)
+    .put(authMiddleWare('getUsers', 'all'), validationHandler(config.update), UserController.update)
+    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
+
+UserRouter.route('/:id')
+    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
+
 UserRouter.route('/login')
     .post(UserController.login, validationHandler(config.create));
 UserRouter.route('/me')

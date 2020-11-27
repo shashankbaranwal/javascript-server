@@ -1,9 +1,10 @@
 import { Response, Request, NextFunction } from 'express';
-import { userModel } from '../../repositories/user/UserModel';
 import * as jwt from 'jsonwebtoken';
-import IRequest from '../../IRequest';
 import { config } from '../../config';
 import UserRepository from '../../repositories/user/UserRepository';
+import { payLoad } from '../../libs/routes/constant';
+import { userModel } from '../../repositories/user/UserModel';
+
 class UserController {
     static instance: UserController;
 
@@ -11,27 +12,22 @@ class UserController {
         if (UserController.instance) {
             return UserController.instance;
         }
+
         UserController.instance = new UserController();
         return UserController.instance;
     }
 
-    get(req, res, next) {
+    me(req: Request, res: Response, next: NextFunction ) {
         try {
-            console.log('Inside get method Trainee Controller');
-            res.send({
-                message: 'Get message Successful',
-                data: [
-                    {
-                        name: 'Get Trainee ',
-                        address: 'Noida',
-                    }
-                ]
+            res.status(200).send({
+                message: 'Profile fetched successfully',
+                data: [res.locals.userData],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
         }
     }
-
     login(req, res) {
         try {
             console.log('I am in login route');
@@ -55,6 +51,7 @@ class UserController {
                     else {
                         console.log('Existing user is:', docs);
 
+                        // tslint:disable-next-line: no-shadowed-variable
                         const payLoad = {
                             'iss': 'Online JWT Builder',
                             'iat': 1604994214,
@@ -77,65 +74,61 @@ class UserController {
             res.send(err);
         }
     }
-    me( req: IRequest, res: Response, next: NextFunction ) {
-        const data = req.userData;
-        res.json(200)( {
-            message: 'Me',
-            status: 'Ok',
-            data
-       } );
-    }
-    post(req, res, next) {
+    get(req, res, next) {
         try {
-            console.log('Inside User post method Trainee Controller');
-            const userRepository: UserRepository = new UserRepository();
-            console.log('Data sending in progress');
+            const userRepository = new UserRepository();
+            const extractedData =  userRepository.getAll(req.body, {}, {});
+            res.status(200).send({
+                message: 'trainee fetched successfully',
+                data: [extractedData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error: ', err);
+        }
+    }
+
+    create(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userRepository = new UserRepository();
             userRepository.create(req.body);
-            res.send({
-                message: 'Post message Successful',
-                data: [
-                    {
-                        name: 'Post Route',
-                        address: 'Noida',
-                    }
-                ]
+            res.status(200).send({
+                message: 'Data created successfully',
+                data: [req.body],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
+            console.log('error: ', err);
+        }
+    }
+    update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userRepository = new UserRepository();
+            userRepository.update(req.body);
+            res.status(200).send({
+                message: 'trainee updated successfully',
+                data: [req.body]
+            });
+        } catch (err) {
+            console.log('error is ', err);
         }
     }
 
-    put(req, res, next) {
+    delete(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log('Inside put method Trainee Controller');
-            res.send({
-                message: 'Put message Successful',
+            const userRepository = new UserRepository();
+            userRepository.delete(req.body);
+            res.status(200).send({
+                message: 'trainee deleted successfully',
                 data: [
                     {
-                        name: 'Trainee123',
-                        address: 'Noida',
+                        'action': `data has deleted with id -> ${req.body.originalId}`
                     }
-                ]
+                ],
+                status: 'success',
             });
         } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-
-    delete(req, res, next) {
-        try {
-            console.log('Inside delete method Trainee Controller');
-            res.send({
-                message: 'delete message Successful',
-                data: [
-                    {
-                        name: 'Trainee123',
-                        address: 'Noida',
-                    }
-                ]
-            });
-        } catch (err) {
-            console.log('Inside err', err);
+            console.log('error is ', err);
         }
     }
 }

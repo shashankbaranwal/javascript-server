@@ -1,8 +1,10 @@
 import * as jwt from 'jsonwebtoken';
 import { hasPermission } from './permission';
-
+import { config } from '../../config';
 import { Response, NextFunction } from 'express';
+import UserRepository from '../../repositories/user/UserRepository';
 import IRequest from '../../IRequest';
+
 
 export const authMiddleWare = (moduleName: string, permissionType: string) => async (req: IRequest, res: Response, next: NextFunction) => {
     try {
@@ -33,4 +35,3 @@ export const authMiddleWare = (moduleName: string, permissionType: string) => as
         });
     }
 };
-
