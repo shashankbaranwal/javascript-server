@@ -20,8 +20,13 @@ class Server {
         const options = {
             definition: {
                 info: {
-                    title: 'JavaScript-Server API Swagger',
+                    openapi: '3.0.0',
+                    description: 'An express app performing CRUD operation after authentication',
                     version: '1.0.0',
+                    title: 'First express app',
+                    properties: {
+                        email: 'shashank.baranawal@successive.tech'
+                    },
                 },
                 securityDefinitions: {
                     Bearer: {
