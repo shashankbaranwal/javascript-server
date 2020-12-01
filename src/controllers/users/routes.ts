@@ -7,10 +7,10 @@ const userRouter = express.Router();
 
 
 userRouter.route('/')
-    .get(UserController.get)                                       // authMiddleWare('getUser', 'read'), validationHandler(validation.get),
-    .post(UserController.create)                                  // authMiddleWare('getUser', 'read'), validationHandler(validation.create),
-    .put( UserController.update)                                 // authMiddleWare('getUser', 'read'), validationHandler(validation.update),
-    .delete(UserController.delete);                             // authMiddleWare('getUser', 'read'), validationHandler(validation.delete),
+    .get(authMiddleWare('getUser', 'read'), validationHandler(config.get), UserController.get)
+    .post(authMiddleWare('getUser', 'read'), validationHandler(config.create), UserController.create)
+    .put(authMiddleWare('getUser', 'read'), validationHandler(config.update), UserController.update)
+    .delete(authMiddleWare('getUser', 'read'), validationHandler(config.delete), UserController.delete);
 userRouter.route('/login')
     .post(UserController.login);
 userRouter.route('/me')
