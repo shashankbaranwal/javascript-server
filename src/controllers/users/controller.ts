@@ -84,7 +84,7 @@ class UserController {
                 data: [req.body]
             });
         } catch (err) {
-            console.log('error is ', err);
+            console.log('error: ', err);
         }
     }
 
@@ -102,7 +102,7 @@ class UserController {
                 status: 'success',
             });
         } catch (err) {
-            console.log('error is ', err);
+            console.log('error: ', err);
         }
     }
 

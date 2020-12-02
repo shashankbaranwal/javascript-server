@@ -1,7 +1,6 @@
 import * as express from 'express';
 import UserController from './controller';
 import { authMiddleWare } from '../../libs/routes/authMiddleWare';
-import { permissions } from '../../libs/routes/constant';
 import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
 const userRouter = express.Router();
@@ -108,7 +107,7 @@ userRouter.route('/')
  *         schema:
  *              $ref: '#/definitions/Unauthorized'
  */
-    .get(UserController.get)                                       // authMiddleWare('getUser', 'read'), validationHandler(validation.get),
+    .get(authMiddleWare('getUser', 'read'), validationHandler(config.get), UserController.get)
 /**
  * @swagger
  *
@@ -152,7 +151,7 @@ userRouter.route('/')
  *         schema:
  *              $ref: '#/definitions/Unauthorized'
  */
-    .post(UserController.create)                                  // authMiddleWare('getUser', 'read'), validationHandler(validation.create),
+    .post(authMiddleWare('getUser', 'read'), validationHandler(config.create), UserController.create)
 /**
  * @swagger
  *
@@ -199,7 +198,7 @@ userRouter.route('/')
  *         schema:
  *              $ref: '#/definitions/Unauthorized'
  */
-    .put(validationHandler(config.update), UserController.update)
+    .put(authMiddleWare('getUser', 'read'), validationHandler(config.update), UserController.update)
 /**
  * @swagger
  *
@@ -236,7 +235,7 @@ userRouter.route('/')
  *         schema:
  *              $ref: '#/definitions/Unauthorized'
  */
-    .delete(UserController.delete);                             // authMiddleWare('getUser', 'read'), validationHandler(validation.delete),
+    .delete(authMiddleWare('getUser', 'read'), validationHandler(config.delete), UserController.delete);
 
 /**
  * @swagger
