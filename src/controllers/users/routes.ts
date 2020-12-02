@@ -5,7 +5,6 @@ import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
 const UserRouter = express.Router();
 
-<<<<<<< HEAD
 /**
  * @swagger
  *
@@ -45,7 +44,7 @@ const UserRouter = express.Router();
  *               data:
  *                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5laGEuZ29lbEBzdWNjZXNzaXZlLnRlY2giLCJpZCI6IjVlNGEzNmJjNjQ4MjRiMWY4MGI3MzBjZCIsImlhdCI6MTU4MjU0OTIyN30.cFV6YYlfmhJ1yL3GyIIgb-PjMTpDNVICd5KGi1ENpVI
  */
-userRouter.route('/')
+UserRouter.route('/')
 /**
  * @swagger
  *
@@ -275,7 +274,7 @@ userRouter.route('/')
  *              err:
  *                  example: Password is incorrect
  */
-userRouter.route('/login')
+UserRouter.route('/login')
     .post(UserController.login);
 /**
  * @swagger
@@ -306,24 +305,7 @@ userRouter.route('/login')
  *         schema:
  *             $ref: '#/definitions/me'
  */
-userRouter.route('/me')
+UserRouter.route('/me')
     .get(authMiddleWare('getUsers', 'read'), UserController.me);
 
 export default userRouter;
-=======
-UserRouter.route('/login')
-    .post(UserController.login);
-UserRouter.route('/me')
-    .get(authMiddleWare('getUsers', 'read'), UserController.me);
-UserRouter.route('/')
-    .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.get)
-    .post(authMiddleWare('getUsers', 'write'), validationHandler(config.create), UserController.create)
-    .put(authMiddleWare('getUsers', 'all'), validationHandler(config.update), UserController.update)
-    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
-
-UserRouter.route('/:id')
-    .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
-
-
-export default UserRouter;
->>>>>>> 0a9444e1794fbcbb515155389b72895368e9263a

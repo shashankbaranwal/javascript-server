@@ -87,11 +87,7 @@ class UserController {
         }
     }
 
-<<<<<<< HEAD
-    async delete(req: Request, res: Response, next: NextFunction) {
-=======
     delete = async(req: Request, res: Response, next: NextFunction) => {
->>>>>>> 0a9444e1794fbcbb515155389b72895368e9263a
         try {
             const userRepository = new UserRepository();
             userRepository.delete(req.body);
@@ -141,25 +137,6 @@ class UserController {
         }
     }
 
-<<<<<<< HEAD
-    async me(req, res, next) {
-        try {
-            const token = req.headers.authorization;
-            const decorderUser = jwt.verify(token, config.secret_key);
-            const email = decorderUser.docs.email;
-            console.log(token, email);
-            userModel.findOne({ email: (email) }, (err, docs) => {
-                res.send({
-                    message: 'User Details',
-                    data: {
-                        docs,
-                    }
-                });
-            });
-        }
-        catch (err) {
-            console.log(err);
-=======
     async me(req: Request, res: Response, next: NextFunction) {
         try {
             res.status(200).send({
@@ -169,7 +146,6 @@ class UserController {
             });
         } catch (err) {
             console.log('error is ', err);
->>>>>>> 0a9444e1794fbcbb515155389b72895368e9263a
         }
     }
     catch(err) {
