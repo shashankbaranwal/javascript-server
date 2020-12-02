@@ -19,4 +19,4 @@ UserRouter.route('/:id')
     .delete(authMiddleWare('getUsers', 'delete'), validationHandler(config.delete), UserController.delete);
 
 
-export default userRouter;
+export default UserRouter;
