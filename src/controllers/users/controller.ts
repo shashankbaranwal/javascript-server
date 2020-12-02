@@ -29,10 +29,12 @@ class UserController {
             sort[`${sortedBy}`] = sortedOrder;
             console.log(sort);
             const userList = await userRepository.getList(req.body, {}, { skip, limit}, sort);
+            const totalCount = await userRepository.count(req.body);
+            const count = userList.length;
             res.status(200).send({
                 message: 'trainee fetched successfully',
-                totalCount: await userRepository.count(req.body),
-                count: userList.length,
+                TotalCount: totalCount,
+                Count: count,
                 data: [userList],
                 status: 'success',
             });
