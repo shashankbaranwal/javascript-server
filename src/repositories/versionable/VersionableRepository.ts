@@ -83,5 +83,6 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
 
         const model = new this.model(newData);
         return model.save();
+
     }
 }

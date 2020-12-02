@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import * as bcrypt from 'bcrypt';
 import UserRepositories from '../../repositories/user/UserRepository';
-
 class TraineeController {
+    private userRepository;
+    constructor() {
+        this.userRepository = new UserRepositories();
+    }
     static instance: TraineeController;
-
     static getInstance() {
         if (TraineeController.instance) {
             return TraineeController.instance;
@@ -78,6 +80,7 @@ class TraineeController {
             });
         } catch (err) {
             console.log('Inside err', err);
+
         }
     }
 }

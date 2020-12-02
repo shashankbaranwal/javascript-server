@@ -9,6 +9,7 @@ import IRequest from '../../IRequest';
 
 class UserController {
     public userRepository: UserRepository; // = new UserRepository();
+
     static instance: UserController;
 
     static getInstance() {
@@ -38,7 +39,6 @@ class UserController {
         }
     }
 
-
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const userRepository = new UserRepository();
@@ -62,7 +62,7 @@ class UserController {
                 data: [req.body]
             });
         } catch (err) {
-            console.log('error is ', err);
+            console.log('error: ', err);
         }
     }
 
@@ -80,7 +80,7 @@ class UserController {
                 status: 'success',
             });
         } catch (err) {
-            console.log('error is ', err);
+            console.log('error: ', err);
         }
     }
 
@@ -116,20 +116,16 @@ class UserController {
         }
     }
 
-    async me(req, res, next) {
+    async me(req: Request, res: Response, next: NextFunction ) {
         try {
-            const token = req.headers.authorization;
-            const decorderUser = jwt.verify(token, config.secret_key);
-            const email = decorderUser.docs.email;
-            console.log(token, email);
-            userModel.findOne({ email: (email) }, (err, docs) => {
-                    res.send({
-                            message: 'User Details',
-                            data: {
-                                docs,
-                            }
-                        });
-        });
+            res.status(200).send({
+                message: 'Profile fetched successfully',
+                data: [res.locals.userData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
+        }
     }
         catch (err) {
             console.log(err);
