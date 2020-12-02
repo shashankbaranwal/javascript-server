@@ -6,7 +6,7 @@ import { payLoad } from '../../libs/routes/constant';
 import * as bcrypt from 'bcrypt';
 import { userModel } from '../../repositories/user/UserModel';
 import IRequest from '../../IRequest';
-
+import { Query } from 'mongoose';
 
 class UserController {
     public userRepository: UserRepository; // = new UserRepository();
@@ -20,13 +20,22 @@ class UserController {
         return UserController.instance;
     }
 
-    async get(req, res, next) {
+    get = async (req, res, next) => {
         try {
             const userRepository = new UserRepository();
-            const extractedData = await userRepository.getAll(req.body, {}, {});
+            const { sortedBy , sortedOrder} = req.query;
+            const { skip , limit} = req.query ;
+            const sort = {};
+            sort[`${sortedBy}`] = sortedOrder;
+            console.log(sort);
+            const userList = await userRepository.getList(req.body, {}, { skip, limit}, sort);
+            const totalCount = await userRepository.count(req.body);
+            const count = userList.length;
             res.status(200).send({
                 message: 'trainee fetched successfully',
-                data: [extractedData],
+                TotalCount: totalCount,
+                Count: count,
+                data: [userList],
                 status: 'success',
             });
         } catch (err) {
@@ -34,11 +43,10 @@ class UserController {
         }
     }
 
-
-    async create(req: Request, res: Response, next: NextFunction) {
+    create = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const userRepository = new UserRepository();
-            userRepository.userCreate(req.body);
+            userRepository.Create(req.body);
             res.status(200).send({
                 message: 'Data created successfully',
                 data: [req.body],
@@ -49,7 +57,7 @@ class UserController {
         }
     }
 
-    async update(req: Request, res: Response, next: NextFunction) {
+    update = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const userRepository = new UserRepository();
             userRepository.userUpdate(req.body);
@@ -62,7 +70,7 @@ class UserController {
         }
     }
 
-    async delete(req: Request, res: Response, next: NextFunction) {
+    delete = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const userRepository = new UserRepository();
             userRepository.delete(req.body);
@@ -80,56 +88,52 @@ class UserController {
         }
     }
 
-    async login(req, res) {
+    login = async (req, res) => {
         try {
             console.log('I am in login route');
-            const { email , password } = req.body;
+            const { email, password } = req.body;
             console.log(req.body.email);
             userModel.findOne({ email: (email) }, (err, docs) => {
-                    if (bcrypt.compareSync(password, docs.password)) {
-                        console.log('Existing user is:', docs);
-                        const token = jwt.sign({docs}, config.secret_key, { expiresIn: '15m' });
-                        const decorderUser = jwt.verify(token, config.secret_key);
-                        console.log(decorderUser);
-                        res.send({
-                            Data: token,
-                            Message: 'User Exists',
-                            status: 200
-                        });
-                    }
-                    else {
-                        res.send({
-                                message: 'Invalid user',
-                                data1: {
-                                    email: req.body.email,
-                                    password: req.body.password
-                                }
-                            });
-                    }
+                if (bcrypt.compareSync(password, docs.password)) {
+                    console.log('Existing user is:', docs);
+                    const token = jwt.sign({ docs }, config.secret_key, { expiresIn: '15m' });
+                    const decorderUser = jwt.verify(token, config.secret_key);
+                    console.log(decorderUser);
+                    res.send({
+                        Data: token,
+                        Message: 'User Exists',
+                        status: 200
+                    });
+                }
+                else {
+                    res.send({
+                        message: 'Invalid user',
+                        data1: {
+                            email: req.body.email,
+                            password: req.body.password
+                        }
+                    });
+                }
             });
         } catch (err) {
             res.send(err);
         }
     }
 
-    async me(req, res, next) {
+    async me(req: Request, res: Response, next: NextFunction) {
         try {
-            const token = req.headers.authorization;
-            const decorderUser = jwt.verify(token, config.secret_key);
-            const email = decorderUser.docs.email;
-            console.log(token, email);
-            userModel.findOne({ email: (email) }, (err, docs) => {
-                    res.send({
-                            message: 'User Details',
-                            data: {
-                                docs,
-                            }
-                        });
-        });
-    }
-        catch (err) {
-            console.log(err);
+            res.status(200).send({
+                message: 'Profile fetched successfully',
+                data: [res.locals.userData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
         }
     }
+    catch(err) {
+        console.log(err);
+    }
 }
+
 export default UserController.getInstance();

@@ -7,7 +7,7 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
         return String(mongoose.Types.ObjectId());
     }
 
-    private model: M;
+    public model: M;
 
     constructor(model) {
         this.model = model;
@@ -31,9 +31,11 @@ export default class VersioningRepository<D extends mongoose.Document, M extends
         return this.model.countDocuments(finalQuery);
     }
 
-    public getAll(query: any, projection: any = {}, options: any = {}): DocumentQuery<D[], D> {
+    public getAll(query: any, projection: any = {}, options: any = {}, sort: any = {}): DocumentQuery<D[], D> {
+        options.limit = options.limit || 0;
+        options.skip = options.skip || 0;
         const finalQuery = { deletedAt: undefined, ...query };
-        return this.model.find(finalQuery, projection, options);
+        return this.model.find(finalQuery, projection, options).sort({...sort});
     }
 
     protected findOne(query: any): DocumentQuery<D, D> {
