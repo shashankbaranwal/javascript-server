@@ -1,7 +1,10 @@
 import * as mongoose from 'mongoose';
-import { userModel } from './UserModel';
 import IUserModel from './IUserModel';
+import { userModel } from './UserModel';
+import * as bcrypt from 'bcrypt';
+
 import VersionableRepository from '../versionable/VersionableRepository';
+
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
 
     public static generateObjectId() {
@@ -14,11 +17,7 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
         return userModel.findOne(query).lean();
     }
 
-    public create(data) {
-        return super.create(data);
-    }
-
-    public count() {
+    public countData() {
         return userModel.countDocuments();
     }
 }

@@ -4,6 +4,6 @@ export default interface IRequest extends Request {
     headers: any;
     query: any;
     params: any;
-    body: { email: any; password: any; };
+    body: any;
     userData: any;
 }

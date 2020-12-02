@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import * as bcrypt from 'bcrypt';
 import UserRepositories from '../../repositories/user/UserRepository';
+
 class TraineeController {
     private userRepository;
     constructor() {

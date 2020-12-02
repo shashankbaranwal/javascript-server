@@ -1,7 +1,7 @@
-interface IConfig {
-    port: string;
-    nodeenv: string;
-    mongourl: string;
+export default interface IConfig {
+    PORT: string;
+    NODE_ENV: string;
+    MONGO_URL: string;
     secret_key: string;
+    PASSWORD: string;
 }
-export { IConfig };

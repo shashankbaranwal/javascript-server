@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
-import IVersionableDocument from '../versionable/IVersionableDocument';
+import IVersionable from '../versionable/IVersionableDocument';
 
-export default interface IUserModel extends IVersionableDocument {
+export default interface IUserModel extends IVersionable {
     id: string;
     name: string;
     email: string;

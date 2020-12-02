@@ -30,16 +30,16 @@ class Server {
         this.app.use(bodyparser.json());
     }
     run() {
-        const { app, config: { port } } = this;
+        const { app, config: { PORT } } = this;
         Database.open('mongodb://localhost:27017/express-training')
         .then((res) => {
             console.log('Succesfully connected to Mongo');
-            app.listen(port, (err) => {
+            app.listen(PORT, (err) => {
                 if (err) {
                     console.log(err);
                 }
                 else {
-                    console.log(`App is running on port ${port}`);
+                    console.log(`App is running on port ${PORT}`);
                     // Database.disconnect();
                 }
             });
