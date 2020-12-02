@@ -6,6 +6,7 @@ import { payLoad } from '../../libs/routes/constant';
 import * as bcrypt from 'bcrypt';
 import { userModel } from '../../repositories/user/UserModel';
 import IRequest from '../../IRequest';
+import { Query } from 'mongoose';
 
 class UserController {
     public userRepository: UserRepository; // = new UserRepository();
@@ -19,41 +20,39 @@ class UserController {
         return UserController.instance;
     }
 
-    async get(req, res, next) {
+    get = async(req, res, next) => {
         try {
             const userRepository = new UserRepository();
-            const Search = req.query.search as string || '';
-            console.log(Search);
-            let value = '';
-            let key = '';
+            let searchString = req.query.search as string || '';
+            console.log(searchString);
+            let column = '';
             const regexName = /^[a-z]+$/i;
             const regexEmail = /\b[a-zA-Z0-9+_.-]+@[a-z]+\.[a-z]{2,}\b/;
-            if (req.query.search) {
-                if (regexName.test(Search)) {
-                    value = Search;
-                    key = 'name';
+            if (searchString) {
+                if (regexName.test(searchString)) {
+                    column = 'name';
                 }
-                else if (regexEmail.test(Search)) {
-                    value = Search;
-                    key = 'email';
-                }
-                else {
-                    console.log('Search Successfully');
+                if (regexEmail.test(searchString)) {
+                    column = 'email';
                 }
             }
             else {
-                key = undefined;
-                value = undefined;
+                searchString = undefined;
+                column = undefined;
             }
+            const { sortedBy , sortedOrder} = req.query;
+            const { skip , limit} = req.query ;
             const sort = {};
-            sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
+            sort[`${sortedBy}`] = sortedOrder;
             console.log(sort);
-            const extractedData = await userRepository.getAll(req.body).sort(sort).skip(Number(req.query.skip)).limit(Number(req.query.limit));
+            const userList = await userRepository.getList(req.body, {}, { skip, limit}, sort);
+            const totalCount = await userRepository.count(req.body);
+            const count = userList.length;
             res.status(200).send({
                 message: 'trainee fetched successfully',
-                totalCount: await userRepository.count(req.body),
-                count: extractedData.length,
-                data: [extractedData],
+                TotalCount: totalCount,
+                Count: count,
+                data: [userList],
                 status: 'success',
             });
         } catch (err) {
@@ -61,10 +60,10 @@ class UserController {
         }
     }
 
-    async create(req: Request, res: Response, next: NextFunction) {
+    create = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const userRepository = new UserRepository();
-            userRepository.userCreate(req.body);
+            userRepository.Create(req.body);
             res.status(200).send({
                 message: 'Data created successfully',
                 data: [req.body],
@@ -75,7 +74,7 @@ class UserController {
         }
     }
 
-    async update(req: Request, res: Response, next: NextFunction) {
+    update = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const userRepository = new UserRepository();
             userRepository.userUpdate(req.body);
@@ -88,7 +87,11 @@ class UserController {
         }
     }
 
+<<<<<<< HEAD
     async delete(req: Request, res: Response, next: NextFunction) {
+=======
+    delete = async(req: Request, res: Response, next: NextFunction) => {
+>>>>>>> 0a9444e1794fbcbb515155389b72895368e9263a
         try {
             const userRepository = new UserRepository();
             userRepository.delete(req.body);
@@ -106,7 +109,7 @@ class UserController {
         }
     }
 
-    async login(req, res) {
+    login = async (req, res) => {
         try {
             console.log('I am in login route');
             const { email, password } = req.body;
@@ -138,6 +141,7 @@ class UserController {
         }
     }
 
+<<<<<<< HEAD
     async me(req, res, next) {
         try {
             const token = req.headers.authorization;
@@ -155,7 +159,22 @@ class UserController {
         }
         catch (err) {
             console.log(err);
+=======
+    async me(req: Request, res: Response, next: NextFunction) {
+        try {
+            res.status(200).send({
+                message: 'Profile fetched successfully',
+                data: [res.locals.userData],
+                status: 'success',
+            });
+        } catch (err) {
+            console.log('error is ', err);
+>>>>>>> 0a9444e1794fbcbb515155389b72895368e9263a
         }
     }
+    catch(err) {
+        console.log(err);
+    }
 }
+
 export default UserController.getInstance();

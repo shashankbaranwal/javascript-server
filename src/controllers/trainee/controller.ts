@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as bcrypt from 'bcrypt';
 import UserRepositories from '../../repositories/user/UserRepository';
-
 class TraineeController {
     private userRepository;
     constructor() {
@@ -33,7 +32,7 @@ class TraineeController {
         }
     }
 
-    async post(req, res, next) {
+    async create(req, res, next) {
         try {
             console.log('Inside get method Trainee Controller');
             res.send({
@@ -50,7 +49,7 @@ class TraineeController {
         }
     }
 
-    async put(req, res, next) {
+    async update(req, res, next) {
         try {
             console.log('Inside get method Trainee Controller');
             res.send({

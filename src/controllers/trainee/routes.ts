@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import { authMiddleWare } from '../../libs/routes/authMiddleWare';
+import { authMiddleWare } from '../../libs/routes/authMiddleWare';
 import TraineeController from './controller';
 import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
@@ -165,7 +165,7 @@ traineeRouter.route('/')
  *         schema:
  *              $ref: '#/definitions/Unauthorized'
  */
-    .post(validationHandler(config.create), TraineeController.post)
+    .post(validationHandler(config.create), TraineeController.create)
 /**
  * @swagger
  *
@@ -212,7 +212,7 @@ traineeRouter.route('/')
  *         schema:
  *              $ref: '#/definitions/Unauthorized'
  */
-    .put(validationHandler(config.update), TraineeController.put)
+    .put(validationHandler(config.update), TraineeController.update)
 /**
  * @swagger
  *
