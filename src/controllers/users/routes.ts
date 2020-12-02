@@ -3,11 +3,11 @@ import UserController from './controller';
 import { authMiddleWare } from '../../libs/routes/authMiddleWare';
 import { validationHandler } from '../../libs/routes/validationHandler';
 import config from './validation';
-const userRouter = express.Router();
+const UserRouter = express.Router();
 
-userRouter.route('/login')
+UserRouter.route('/login')
     .post(UserController.login);
-userRouter.route('/me')
+UserRouter.route('/me')
     .get(authMiddleWare('getUsers', 'read'), UserController.me);
 UserRouter.route('/')
     .get(authMiddleWare('getUsers', 'read'), validationHandler(config.get), UserController.get)

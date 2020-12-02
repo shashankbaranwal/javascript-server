@@ -9,7 +9,6 @@ import IRequest from '../../IRequest';
 
 class UserController {
     public userRepository: UserRepository; // = new UserRepository();
-
     static instance: UserController;
 
     static getInstance() {
