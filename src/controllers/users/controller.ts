@@ -20,9 +20,26 @@ class UserController {
         return UserController.instance;
     }
 
-    get = async (req, res, next) => {
+    get = async(req, res, next) => {
         try {
             const userRepository = new UserRepository();
+            let searchString = req.query.search as string || '';
+            console.log(searchString);
+            let column = '';
+            const regexName = /^[a-z]+$/i;
+            const regexEmail = /\b[a-zA-Z0-9+_.-]+@[a-z]+\.[a-z]{2,}\b/;
+            if (searchString) {
+                if (regexName.test(searchString)) {
+                    column = 'name';
+                }
+                if (regexEmail.test(searchString)) {
+                    column = 'email';
+                }
+            }
+            else {
+                searchString = undefined;
+                column = undefined;
+            }
             const { sortedBy , sortedOrder} = req.query;
             const { skip , limit} = req.query ;
             const sort = {};

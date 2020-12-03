@@ -80,7 +80,6 @@ class TraineeController {
             });
         } catch (err) {
             console.log('Inside err', err);
-
         }
     }
 }

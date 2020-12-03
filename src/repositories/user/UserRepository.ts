@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import VersionableRepository from '../versionable/VersionableRepository';
 
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
+    search: any;
 
     public static generateObjectId() {
         return String(mongoose.Types.ObjectId());
