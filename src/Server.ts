@@ -6,6 +6,7 @@ import { errorHandler } from './libs/routes/errorHandler';
 import { notFoundRoute } from './libs/routes/notFoundRoute';
 import * as swaggerJsDoc from 'swagger-jsdoc';
 import * as swaggerUI from 'swagger-ui-express';
+import * as cors from 'cors';
 class Server {
     app;
     constructor(private config) {
@@ -45,6 +46,7 @@ class Server {
     }
     public setupRouts() {
         const { app } = this;
+        app.use(cors());
         app.use('/health-check', (_req, res) => {
             console.log('inside Second middleware');
             res.send('I am OK');
